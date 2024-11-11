@@ -50,7 +50,7 @@ class AssetsSubscriberTest extends \PHPUnit\Framework\TestCase
             ->willReturn(false);
 
         $this->requestEvent->expects($this->never())
-            ->method('isMasterRequest');
+            ->method('isMainRequest');
 
         $this->assetsSubscriber->loadAssets($this->requestEvent);
     }
@@ -62,7 +62,7 @@ class AssetsSubscriberTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $this->requestEvent->expects($this->once())
-            ->method('isMasterRequest')
+            ->method('isMainRequest')
             ->willReturn(true);
 
         $this->requestEvent->expects($this->once())
@@ -83,7 +83,7 @@ class AssetsSubscriberTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true);
 
         $this->requestEvent->expects($this->once())
-            ->method('isMasterRequest')
+            ->method('isMainRequest')
             ->willReturn(true);
 
         $this->requestEvent->expects($this->once())

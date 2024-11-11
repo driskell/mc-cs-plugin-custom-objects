@@ -43,7 +43,7 @@ class AssetsSubscriber implements EventSubscriberInterface
 
     public function loadAssets(RequestEvent $event): void
     {
-        if ($this->configProvider->pluginIsEnabled() && $event->isMasterRequest() && $this->isMauticAdministrationPage($event->getRequest())) {
+        if ($this->configProvider->pluginIsEnabled() && $event->isMainRequest() && $this->isMauticAdministrationPage($event->getRequest())) {
             $this->assetHelper->addScript('plugins/CustomObjectsBundle/Assets/js/custom-objects.js');
             $this->assetHelper->addScript('plugins/CustomObjectsBundle/Assets/js/co-form.js');
             $this->assetHelper->addStylesheet('plugins/CustomObjectsBundle/Assets/css/custom-objects.css');
