@@ -21,8 +21,8 @@ use MauticPlugin\CustomObjectsBundle\Provider\CustomItemPermissionProvider;
 use MauticPlugin\CustomObjectsBundle\Provider\CustomItemRouteProvider;
 use MauticPlugin\CustomObjectsBundle\Repository\CustomFieldRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ImportSubscriber implements EventSubscriberInterface
@@ -229,7 +229,7 @@ class ImportSubscriber implements EventSubscriberInterface
      *
      * @param mixed[] $matchedFields
      */
-    private function handleValidateRequired(Form $form, int $customObjectId, array $matchedFields): void
+    private function handleValidateRequired(FormInterface $form, int $customObjectId, array $matchedFields): void
     {
         $requiredFields = $this->customFieldRepository->getRequiredCustomFieldsForCustomObject($customObjectId);
 

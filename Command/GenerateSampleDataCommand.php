@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MauticPlugin\CustomObjectsBundle\Command;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManager;
 use MauticPlugin\CustomObjectsBundle\Helper\RandomHelper;
 use Symfony\Component\Console\Command\Command;
@@ -111,8 +111,6 @@ class GenerateSampleDataCommand extends Command
 
     /**
      * @return int[]
-     *
-     * @throws DBALException
      */
     private function createCustomObjectsWithItems(): array
     {
@@ -150,13 +148,16 @@ class GenerateSampleDataCommand extends Command
         return [$coProductId, $cfPriceId, $coOrderId];
     }
 
+    /**
+     * @throws Exception
+     */
     private function cleanupDB(): void
     {
         $query = 'delete from '.MAUTIC_TABLE_PREFIX.'leads where 1';
-        $this->connection->query($query);
+        $this->connection->executeQuery($query);
 
         $query = 'delete from '.MAUTIC_TABLE_PREFIX.'custom_object where 1';
-        $this->connection->query($query);
+        $this->connection->executeQuery($query);
     }
 
     private function generateContact(int $coProductId, int $cfPriceId, int $coOrderId, int $priceLimit): void
@@ -220,9 +221,11 @@ class GenerateSampleDataCommand extends Command
     }
 
     /**
+     * @param array<int|string, mixed> $row
+     *
      * @return int Last inserted row ID
      *
-     * @throws DBALException
+     * @throws Exception
      */
     private function insertInto(string $table, array $row): int
     {
@@ -253,7 +256,7 @@ class GenerateSampleDataCommand extends Command
             VALUES ($values)
         ";
 
-        $this->connection->query($query);
+        $this->connection->executeQuery($query);
 
         return (int) $this->connection->lastInsertId();
     }
