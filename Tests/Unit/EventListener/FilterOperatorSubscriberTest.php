@@ -29,7 +29,6 @@ final class FilterOperatorSubscriberTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', getenv('MAUTIC_DB_PREFIX') ?: '');
         $this->customObjectModelMock    = $this->createMock(CustomObjectModel::class);
         $this->filterOperatorSubscriber = new FilterOperatorSubscriber($this->customObjectModelMock);
     }

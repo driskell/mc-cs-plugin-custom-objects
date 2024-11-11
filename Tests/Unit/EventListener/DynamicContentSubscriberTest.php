@@ -87,8 +87,6 @@ class DynamicContentSubscriberTest extends TestCase
 
     public function testFiltersInsertedIntoEvent(): void
     {
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', '');
-
         $this->configProviderMock->expects($this->once())->method('pluginIsEnabled')->willReturn(true);
 
         $this->queryFilterFactory->expects($this->exactly(2))

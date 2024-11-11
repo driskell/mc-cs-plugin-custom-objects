@@ -58,8 +58,6 @@ class ReportColumnsBuilderTest extends TestCase
 
     protected function setUp(): void
     {
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', getenv('MAUTIC_DB_PREFIX') ?: '');
-
         $this->customObject                    = $this->createMock(CustomObject::class);
         $this->reportColumnsBuilder            = new ReportColumnsBuilder($this->customObject);
         $this->connection                      = $this->createMock(Connection::class);

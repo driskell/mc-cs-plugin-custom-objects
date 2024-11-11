@@ -102,8 +102,6 @@ class CustomItemXrefContactModelTest extends \PHPUnit\Framework\TestCase
 
     public function testGetLinksLineChartData(): void
     {
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', '');
-
         $from         = new \DateTime('2019-03-02 12:30:00');
         $to           = new \DateTime('2019-04-02 12:30:00');
         $connection   = $this->createMock(Connection::class);

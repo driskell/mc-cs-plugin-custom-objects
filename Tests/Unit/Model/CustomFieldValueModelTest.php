@@ -42,8 +42,6 @@ class CustomFieldValueModelTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', '');
-
         $this->customObject           = $this->createMock(CustomObject::class);
         $this->customItem             = $this->createMock(CustomItem::class);
         $this->customField            = $this->createMock(CustomField::class);

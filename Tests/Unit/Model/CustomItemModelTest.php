@@ -107,8 +107,6 @@ class CustomItemModelTest extends TestCase
     {
         parent::setUp();
 
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', getenv('MAUTIC_DB_PREFIX') ?: '');
-
         $this->customItem                   = $this->createMock(CustomItem::class);
         $this->user                         = $this->createMock(User::class);
         $this->entityManager                = $this->createMock(EntityManager::class);

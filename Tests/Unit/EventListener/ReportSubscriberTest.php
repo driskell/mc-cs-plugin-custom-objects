@@ -97,8 +97,6 @@ class ReportSubscriberTest extends TestCase
 
     protected function setUp(): void
     {
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', getenv('MAUTIC_DB_PREFIX') ?: '');
-
         $this->customObjectRepository          = $this->createMock(CustomObjectRepository::class);
         $this->fieldsBuilder                   = $this->createMock(FieldsBuilder::class);
         $this->companyReportData               = $this->createMock(CompanyReportData::class);

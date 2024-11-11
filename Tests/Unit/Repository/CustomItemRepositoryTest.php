@@ -43,8 +43,6 @@ class CustomItemRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', '');
-
         $this->entityManager        = $this->createMock(EntityManager::class);
         $classMetadata              = $this->createMock(ClassMetadata::class);
         $this->customObject         = $this->createMock(CustomObject::class);

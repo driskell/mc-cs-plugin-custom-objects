@@ -101,8 +101,6 @@ class CustomObjectModelTest extends TestCase
     {
         parent::setUp();
 
-        defined('MAUTIC_TABLE_PREFIX') || define('MAUTIC_TABLE_PREFIX', '');
-
         $this->customObject                   = $this->createMock(CustomObject::class);
         $this->customField                    = $this->createMock(CustomField::class);
         $this->user                           = $this->createMock(User::class);
