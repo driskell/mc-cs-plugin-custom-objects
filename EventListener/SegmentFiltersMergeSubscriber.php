@@ -29,7 +29,7 @@ class SegmentFiltersMergeSubscriber implements EventSubscriberInterface
              * When \Mautic\LeadBundle\LeadEvents::LIST_FILTERS_MERGE is available in mautic\mautic,
              * we can use it here instead of string.
              */
-            \Mautic\LeadBundle\LeadEvents::LIST_FILTERS_MERGE => 'mergeCustomObjectFilters'
+            \Mautic\LeadBundle\LeadEvents::LIST_FILTERS_MERGE => 'mergeCustomObjectFilters',
         ];
     }
 

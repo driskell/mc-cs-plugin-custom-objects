@@ -14,7 +14,6 @@ use MauticPlugin\CustomObjectsBundle\Helper\QueryFilterHelper;
 use MauticPlugin\CustomObjectsBundle\Provider\ConfigProvider;
 use MauticPlugin\CustomObjectsBundle\Repository\DbalQueryTrait;
 use MauticPlugin\CustomObjectsBundle\Segment\Query\Filter\QueryFilterFactory;
-use PDOException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -99,7 +98,7 @@ class DynamicContentSubscriber implements EventSubscriberInterface
                 } else {
                     $event->setIsEvaluated(true);
                 }
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 $this->logger->error('Failed to evaluate dynamic content for custom object '.$e->getMessage());
 
                 throw $e;

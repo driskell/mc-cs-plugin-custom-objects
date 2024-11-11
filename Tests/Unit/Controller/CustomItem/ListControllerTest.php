@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomItem;
 
-use AllowDynamicProperties;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomItem\ListController;
 use MauticPlugin\CustomObjectsBundle\DTO\TableConfig;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomObject;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class ListControllerTest extends ControllerTestCase
 {
     private const OBJECT_ID = 33;
@@ -80,7 +79,7 @@ class ListControllerTest extends ControllerTestCase
         $this->customItemModel->expects($this->never())
             ->method('getTableData');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')

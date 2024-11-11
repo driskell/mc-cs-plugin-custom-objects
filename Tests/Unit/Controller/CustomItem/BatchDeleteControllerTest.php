@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomItem;
 
-use AllowDynamicProperties;
-use Mautic\CoreBundle\Service\FlashBag;
 use Mautic\CoreBundle\Model\NotificationModel;
+use Mautic\CoreBundle\Service\FlashBag;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomItem\BatchDeleteController;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomItem;
 use MauticPlugin\CustomObjectsBundle\Exception\ForbiddenException;
@@ -19,7 +18,7 @@ use MauticPlugin\CustomObjectsBundle\Provider\SessionProviderFactory;
 use MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\ControllerTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class BatchDeleteControllerTest extends ControllerTestCase
 {
     private $customItemModel;

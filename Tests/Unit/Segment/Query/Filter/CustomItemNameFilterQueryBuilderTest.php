@@ -91,8 +91,6 @@ class CustomItemNameFilterQueryBuilderTest extends TestCase
 
     /**
      * @dataProvider parameterValueProvider
-     *
-     * @param $parameterValue
      */
     public function testApplyQuery($parameterValue): void
     {

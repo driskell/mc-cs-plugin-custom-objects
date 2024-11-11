@@ -15,7 +15,6 @@ use MauticPlugin\CustomObjectsBundle\Provider\CustomItemPermissionProvider;
 use MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\ControllerTestCase;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\MockObject\MockObject;
-use UnexpectedValueException;
 
 class UnlinkControllerTest extends ControllerTestCase
 {
@@ -115,7 +114,7 @@ class UnlinkControllerTest extends ControllerTestCase
 
         $this->customItemModel->expects($this->once())
             ->method('unlinkEntity')
-            ->will($this->throwException(new UnexpectedValueException('Entity unicorn cannot be linked to a custom item')));
+            ->will($this->throwException(new \UnexpectedValueException('Entity unicorn cannot be linked to a custom item')));
 
         $this->flashBag->expects($this->once())
             ->method('add')

@@ -38,9 +38,9 @@ class ConfigProvider
     {
         return $this->coreParametersHelper->get('custom_object_merge_filter', false)
             && (0 === (int) $this->coreParametersHelper->get(
-                    self::CONFIG_PARAM_ITEM_VALUE_TO_CONTACT_RELATION_LIMIT,
-                    self::CONFIG_PARAM_ITEM_VALUE_TO_CONTACT_RELATION_DEFAULT_LIMIT
-                )
+                self::CONFIG_PARAM_ITEM_VALUE_TO_CONTACT_RELATION_LIMIT,
+                self::CONFIG_PARAM_ITEM_VALUE_TO_CONTACT_RELATION_DEFAULT_LIMIT
+            )
             );
     }
 }

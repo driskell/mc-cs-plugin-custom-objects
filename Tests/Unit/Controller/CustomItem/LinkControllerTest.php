@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomItem;
 
-use Doctrine\DBAL\Driver\Exception as TheDriverException;;
+use Doctrine\DBAL\Driver\Exception as TheDriverException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Mautic\CoreBundle\Service\FlashBag;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomItem\LinkController;
@@ -14,7 +14,6 @@ use MauticPlugin\CustomObjectsBundle\Exception\NotFoundException;
 use MauticPlugin\CustomObjectsBundle\Model\CustomItemModel;
 use MauticPlugin\CustomObjectsBundle\Provider\CustomItemPermissionProvider;
 use MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\ControllerTestCase;
-use UnexpectedValueException;
 
 class LinkControllerTest extends ControllerTestCase
 {
@@ -138,7 +137,7 @@ class LinkControllerTest extends ControllerTestCase
         $this->customItemModel->expects($this->once())
             ->method('linkEntity')
             ->with($customItem, 'unicorn', self::ENTITY_ID)
-            ->will($this->throwException(new UnexpectedValueException('Entity unicorn cannot be linked to a custom item')));
+            ->will($this->throwException(new \UnexpectedValueException('Entity unicorn cannot be linked to a custom item')));
 
         $this->flashBag->expects($this->once())
             ->method('add')

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Functional\Helper;
 
-use DateTime;
 use Mautic\CoreBundle\Test\MauticMysqlTestCase;
 use Mautic\LeadBundle\Segment\ContactSegmentFilterFactory;
 use Mautic\LeadBundle\Segment\Query\QueryBuilder;
@@ -81,11 +80,11 @@ class QueryFilterHelperTest extends MauticMysqlTestCase
         $this->assertMatchWhere(
             'test_value.value LIKE :par1',
             [
-                'glue'     => 'and',
-                'field'    => 'cmf_'.$this->getFixtureById('custom_field1')->getId(),
-                'type'     => 'custom_object',
-                'operator' => 'like',
-                'value'    => 'love',
+                'glue'       => 'and',
+                'field'      => 'cmf_'.$this->getFixtureById('custom_field1')->getId(),
+                'type'       => 'custom_object',
+                'operator'   => 'like',
+                'value'      => 'love',
                 'filter'     => '500',
                 'properties' => [
                     'filter' => '500',
@@ -266,7 +265,7 @@ class QueryFilterHelperTest extends MauticMysqlTestCase
                     ],
                 ],
             ],
-            (new DateTime('yesterday'))->format('Y-m-d')
+            (new \DateTime('yesterday'))->format('Y-m-d')
         );
 
         $this->assertMatchWhere(
@@ -284,7 +283,7 @@ class QueryFilterHelperTest extends MauticMysqlTestCase
                     ],
                 ],
             ],
-            (new DateTime('tomorrow'))->format('Y-m-d 23:59:59')
+            (new \DateTime('tomorrow'))->format('Y-m-d 23:59:59')
         );
     }
 

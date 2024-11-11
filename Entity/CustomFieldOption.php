@@ -34,27 +34,34 @@ class CustomFieldOption implements \ArrayAccess
 {
     /**
      * @var CustomField|null
+     *
      * @Id @Column(type="integer")
+     *
      * @ManyToOne(targetEntity="CustomField", inversedBy="options")
+     *
      * @JoinColumn("custom_field_id")
      */
     private $customField;
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_object:read", "custom_object:write", "custom_field:read", "custom_field:write"})
      */
     private $label;
 
     /**
      * @var string|null
+     *
      * @Id @Column(type="integer")
+     *
      * @Groups({"custom_object:read", "custom_object:write", "custom_field:read", "custom_field:write"})
      */
     private $value;
 
     /**
      * @var int|null
+     *
      * @Groups({"custom_object:read", "custom_field:read"})
      */
     private $order;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Entity;
 
-use AllowDynamicProperties;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -42,7 +41,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  *     denormalizationContext={"groups"={"custom_item:write"}, "swagger_definition_name"="Write"}
  * )
  */
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInterface
 {
     use UpsertTrait;
@@ -51,7 +50,9 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     /**
      * @var int|null
+     *
      * @Groups({"custom_item:read"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -66,7 +67,9 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_item:read", "custom_item:write"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -82,8 +85,11 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     /**
      * @var CustomObject
+     *
      * @ManyToOne(targetEntity="CustomObject")
+     *
      * @JoinColumn(name="custom_object_id", referencedColumnName="id")
+     *
      * @Groups({"custom_item:read", "custom_item:write"})
      */
     private $customObject;
@@ -95,7 +101,9 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_item:read", "custom_item:write"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -110,9 +118,13 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     /**
      * @var Category|null
+     *
      * @ManyToOne(targetEntity="Category")
+     *
      * @JoinColumn(name="category_id", referencedColumnName="id")
+     *
      * @ApiProperty(readableLink=false, writableLink=false)
+     *
      * @Groups({"custom_item:read", "custom_item:write"})
      **/
     private $category;
@@ -124,6 +136,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     /**
      * @var array
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -150,6 +163,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *         }
      *     }
      * )
+     *
      * @Groups({"custom_item:read", "custom_item:write"})
      */
     private $fieldValues;
@@ -243,7 +257,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     {
         foreach ($data as $property => $value) {
             $camelCaseProperty          = lcfirst(ucwords($property, '_'));
-            //$this->__set($camelCaseProperty, $value);
+            // $this->__set($camelCaseProperty, $value);
             $this->{$camelCaseProperty} = $value;
         }
     }
@@ -660,7 +674,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
             $uniqueIdentifierFieldAlias              = $uniqueIdentifierField->getAlias();
             $uniqueHash[$uniqueIdentifierFieldAlias] = $this->findCustomFieldValueForFieldAlias($uniqueIdentifierFieldAlias)->getValue();
         }
-        //To prevent creation of duplicates (in case of multiple unique ID fields) due to the order of key-values in the array
+        // To prevent creation of duplicates (in case of multiple unique ID fields) due to the order of key-values in the array
         // Eg. {id => 1, name => "Jay"} and {name => "Jay", id => 1} are duplicates
         ksort($uniqueHash);
 

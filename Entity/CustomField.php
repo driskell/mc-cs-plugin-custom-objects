@@ -50,6 +50,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  *     normalizationContext={"groups"={"custom_field:read"}, "swagger_definition_name"="Read"},
  *     denormalizationContext={"groups"={"custom_field:write"}, "swagger_definition_name"="Write"}
  * )
+ *
  * @ApiFilter(SearchFilter::class, properties={"alias": "partial"})
  */
 class CustomField extends FormEntity implements UniqueEntityInterface, UuidInterface
@@ -61,7 +62,9 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @var int|null
+     *
      * @Groups({"custom_field:read", "custom_object:read"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -76,7 +79,9 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -92,7 +97,9 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -108,7 +115,9 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -142,7 +151,9 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @ManyToOne(targetEntity="CustomObject", inversedBy="customFields")
+     *
      * @JoinColumn(name="custom_object_id", referencedColumnName="id")
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      *
      * @var CustomObject|null
@@ -151,6 +162,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -167,26 +179,32 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     /**
      * @var bool
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      */
     private $required = false;
 
     /**
      * @var mixed
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      */
     private $defaultValue;
 
     /**
      * @var Collection|CustomFieldOption[]
+     *
      * @OneToMany(targetEntity="CustomFieldOption", mappedBy="customField")
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
+     *
      * @ApiSubresource()
      */
     private $options;
 
     /**
      * @var Params|string[]
+     *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      */
     private $params;
@@ -219,7 +237,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
         $this->alias = null;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getLabel();
     }
@@ -441,9 +459,6 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
         return $this->customObject;
     }
 
-    /**
-     * @param CustomObject $customObject
-     */
     public function setCustomObject(?CustomObject $customObject = null): void
     {
         $this->customObject = $customObject;
@@ -467,9 +482,6 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
         return $this->required;
     }
 
-    /**
-     * @param bool $required
-     */
     public function setRequired(?bool $required): void
     {
         $this->required = $this->isUniqueIdentifier ?: (bool) $required;
@@ -636,8 +648,8 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     public function isChoiceType(): bool
     {
-        return ChoiceType::class === $this->getTypeObject()->getSymfonyFormFieldType() ||
-            is_subclass_of($this->getTypeObject()->getSymfonyFormFieldType(), ChoiceType::class);
+        return ChoiceType::class === $this->getTypeObject()->getSymfonyFormFieldType()
+            || is_subclass_of($this->getTypeObject()->getSymfonyFormFieldType(), ChoiceType::class);
     }
 
     public function canHaveMultipleValues(): bool

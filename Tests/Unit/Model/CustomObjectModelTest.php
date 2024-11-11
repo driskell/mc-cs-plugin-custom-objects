@@ -77,7 +77,6 @@ class CustomObjectModelTest extends TestCase
      * @var MockObject|CoreParametersHelper
      */
     private $coreParametersHelper;
-    
     private $queryBuilder;
     private $queryBuilderDbal;
     private $query;
@@ -87,7 +86,6 @@ class CustomObjectModelTest extends TestCase
     private $customObjectRepository;
     private $customObjectPermissionProvider;
     private $customFieldModel;
-
 
     /**
      * @var ListModel

@@ -20,7 +20,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use UnexpectedValueException;
 
 class LinkFormController extends AbstractFormController
 {
@@ -73,7 +72,7 @@ class LinkFormController extends AbstractFormController
                     ],
                 ]
             );
-        } catch (ForbiddenException|NotFoundException|UnexpectedValueException|NoRelationshipException $e) {
+        } catch (ForbiddenException|NotFoundException|\UnexpectedValueException|NoRelationshipException $e) {
             $flashBag->add($e->getMessage(), [], FlashBag::LEVEL_ERROR);
         }
 

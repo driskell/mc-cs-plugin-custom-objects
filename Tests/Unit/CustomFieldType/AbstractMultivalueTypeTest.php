@@ -80,7 +80,7 @@ class AbstractMultivalueTypeTest extends \PHPUnit\Framework\TestCase
                 'in'            => [],
                 '!in'           => [],
                 'somethingelse' => [],
-                ]);
+            ]);
 
         $operators = $this->fieldType->getOperators();
 

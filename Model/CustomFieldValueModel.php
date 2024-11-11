@@ -296,7 +296,7 @@ class CustomFieldValueModel
     private function transformItemsListDataResult(array $result): array
     {
         return array_reduce($result, function (array $result, array $row) {
-            $itemId = $row['custom_item_id'];
+            $itemId  = $row['custom_item_id'];
             $fieldId = $row['custom_field_id'];
 
             if (!isset($result[$itemId])) {

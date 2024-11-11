@@ -186,7 +186,7 @@ class TokenSubscriber implements EventSubscriberInterface
         $tokens->map(function (Token $token) use ($event): void {
             try {
                 $customObject = $this->customObjectModel->fetchEntityByAlias($token->getCustomObjectAlias());
-                $fieldValues = $this->getCustomFieldValues($customObject, $token, $event);
+                $fieldValues  = $this->getCustomFieldValues($customObject, $token, $event);
             } catch (NotFoundException $e) {
                 $fieldValues = null;
             }

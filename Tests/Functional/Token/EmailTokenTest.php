@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Functional\Token;
 
-use AllowDynamicProperties;
 use Mautic\CoreBundle\Test\MauticMysqlTestCase;
 use Mautic\EmailBundle\Entity\Email;
 use Mautic\EmailBundle\Entity\Stat;
@@ -17,7 +16,7 @@ use PHPUnit\Framework\Assert;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class EmailTokenTest extends MauticMysqlTestCase
 {
     use CustomObjectsTrait;

@@ -153,7 +153,7 @@ final class CampaignConditionFieldValueTypeTest extends TestCase
             );
         $options = [
             'customObjectId' => $customObject->getId(),
-            'data'         => [
+            'data'           => [
                 'field' => 42,
             ],
         ];

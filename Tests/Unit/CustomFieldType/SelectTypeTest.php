@@ -60,7 +60,7 @@ class SelectTypeTest extends \PHPUnit\Framework\TestCase
                 '='             => [],
                 '!='            => [],
                 'somethingelse' => [],
-                ]);
+            ]);
 
         $operators = $this->fieldType->getOperators();
 

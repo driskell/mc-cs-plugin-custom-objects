@@ -129,7 +129,8 @@ class CustomItemTabSubscriber implements EventSubscriberInterface
                     'namespace'         => $sessionProvider->getNamespace(),
                 ];
 
-                $event->addTemplate('@CustomObjects/SubscribedEvents/Tab/content.html.twig', $data);            }
+                $event->addTemplate('@CustomObjects/SubscribedEvents/Tab/content.html.twig', $data);
+            }
         }
     }
 

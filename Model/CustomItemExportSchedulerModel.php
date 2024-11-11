@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Model;
 
-use DateTimeImmutable;
-use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Mautic\CoreBundle\Helper\CoreParametersHelper;
 use Mautic\CoreBundle\Helper\ExportHelper;
@@ -72,7 +70,7 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
         $customItemExportScheduler = new CustomItemExportScheduler();
         $customItemExportScheduler
             ->setUser($this->userHelper->getUser())
-            ->setScheduledDateTime(new DateTimeImmutable('now', new DateTimeZone('UTC')))
+            ->setScheduledDateTime(new \DateTimeImmutable('now', new \DateTimeZone('UTC')))
             ->setCustomObjectId($customObjectId);
 
         $this->em->persist($customItemExportScheduler);
@@ -85,10 +83,6 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
     {
         $scheduledDateTime = $customItemExportScheduler->getScheduledDateTime();
         $fileName          = 'custom_items_export_'.$scheduledDateTime->format(self::EXPORT_FILE_NAME_DATE_FORMAT).'.csv';
-
-        // $filePath = $this->exportHelper->getValidExportFileName($fileName, 'custom_item_export_dir');
-        //$filePath = $this->exportHelper->getValidContactExportFileName($fileName, 'custom_item_export_dir');
-        //$filePath = $this->exportHelper->getValidExportFileName($fileName, 'custom_item_export_dir');
 
         $filePath    = $this->coreParametersHelper->get('custom_item_export_dir').'/'.$fileName;
 
@@ -176,7 +170,7 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
                         case 'multiselect': $value = is_array($fieldValue) ? implode(',', $fieldValue) : $fieldValue;
                             break;
 
-                            default: $value = $fieldValue;
+                        default: $value = $fieldValue;
                     }
 
                     $rowData[] = $value;
@@ -284,23 +278,4 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
             ]
         );
     }
-
-//    public function getValidExportFileName(string $fileName, string $directory): string
-//    {
-//        $contactExportDir = $this->coreParametersHelper->get($directory);
-//        $this->filePathResolver->createDirectory($contactExportDir);
-//        $filePath     = $contactExportDir.'/'.$fileName;
-//        $fileName     = (string) pathinfo($filePath, PATHINFO_FILENAME);
-//        $extension    = (string) pathinfo($filePath, PATHINFO_EXTENSION);
-//        $originalName = $fileName;
-//        $i            = 1;
-//
-//        while (file_exists($filePath)) {
-//            $fileName = $originalName.'_'.$i;
-//            $filePath = $contactExportDir.'/'.$fileName.'.'.$extension;
-//            ++$i;
-//        }
-//
-//        return $filePath;
-//    }
 }

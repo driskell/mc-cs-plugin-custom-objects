@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomObject;
 
-use AllowDynamicProperties;
 use Mautic\CoreBundle\Model\NotificationModel;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomObject\FormController;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomObject;
@@ -24,7 +23,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class FormControllerTest extends ControllerTestCase
 {
     private const OBJECT_ID = 33;
@@ -152,7 +151,7 @@ class FormControllerTest extends ControllerTestCase
         $this->routeProvider->expects($this->never())
             ->method('buildEditRoute');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')
@@ -271,7 +270,7 @@ class FormControllerTest extends ControllerTestCase
         $this->routeProvider->expects($this->never())
             ->method('buildCloneRoute');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')

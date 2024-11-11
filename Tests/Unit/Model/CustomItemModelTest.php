@@ -40,7 +40,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use UnexpectedValueException;
 
 class CustomItemModelTest extends TestCase
 {
@@ -176,7 +175,7 @@ class CustomItemModelTest extends TestCase
         $this->customItemRepository->expects($this->once())->method('upsert')->with($this->customItem);
         $this->validator->expects($this->once())->method('validate')->with($this->customItem)->willReturn($this->violationList);
 
-        $this->expectException(NotFoundException::class); //since the fetchEntity() method is called on save and there's no customItem in the DB with ID 1
+        $this->expectException(NotFoundException::class); // since the fetchEntity() method is called on save and there's no customItem in the DB with ID 1
         $this->assertSame($this->customItem, $this->customItemModel->save($this->customItem));
     }
 
@@ -231,7 +230,7 @@ class CustomItemModelTest extends TestCase
                 CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY_DISCOVERY
             );
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->customItemModel->linkEntity($this->customItem, 'contact', 123);
     }
 
@@ -283,7 +282,7 @@ class CustomItemModelTest extends TestCase
                 CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY_DISCOVERY
             );
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->customItemModel->unlinkEntity($this->customItem, 'contact', 123);
     }
 
@@ -357,7 +356,7 @@ class CustomItemModelTest extends TestCase
     {
         $tableConfig = new TableConfig(10, 1, 'column');
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage("customObjectId cannot be empty. It's required for permission management");
         $this->customItemModel->getTableData($tableConfig);
     }
@@ -393,7 +392,7 @@ class CustomItemModelTest extends TestCase
     {
         $tableConfig = new TableConfig(10, 1, 'column');
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage("customObjectId cannot be empty. It's required for permission management");
         $this->customItemModel->getArrayTableData($tableConfig);
     }

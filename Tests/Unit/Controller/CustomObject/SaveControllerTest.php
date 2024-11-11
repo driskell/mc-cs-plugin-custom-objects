@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomObject;
 
-use AllowDynamicProperties;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomObject\SaveController;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomObject;
 use MauticPlugin\CustomObjectsBundle\Exception\ForbiddenException;
@@ -27,7 +26,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class SaveControllerTest extends ControllerTestCase
 {
     private const OBJECT_ID = 33;
@@ -98,7 +97,7 @@ class SaveControllerTest extends ControllerTestCase
         $this->permissionProvider->expects($this->never())
             ->method('canCreate');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')

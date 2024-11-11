@@ -96,19 +96,19 @@ class SegmentFiltersChoicesGenerateSubscriber implements EventSubscriberInterfac
                         continue;
                     }
 
-                    if (method_exists($this->typeOperatorProvider, 'getContext') &&
-                        'segment' === $this->typeOperatorProvider->getContext() &&
-                        method_exists($customField->getTypeObject(), 'getOperatorsForSegment')
+                    if (method_exists($this->typeOperatorProvider, 'getContext')
+                        && 'segment' === $this->typeOperatorProvider->getContext()
+                        && method_exists($customField->getTypeObject(), 'getOperatorsForSegment')
                     ) {
                         $allowedOperators = $customField->getTypeObject()->getOperatorsForSegment();
                     } else {
                         $allowedOperators = $customField->getTypeObject()->getOperators();
                     }
 
-                    $typeOperators = $this->typeOperatorProvider->getOperatorsForFieldType($customField->getType());
+                    $typeOperators      = $this->typeOperatorProvider->getOperatorsForFieldType($customField->getType());
                     $availableOperators = array_flip($typeOperators);
-                    $operators = array_intersect_key($availableOperators, $allowedOperators);
-                    $operators = array_flip($operators);
+                    $operators          = array_intersect_key($availableOperators, $allowedOperators);
+                    $operators          = array_flip($operators);
 
                     $event->addChoice(
                         'custom_object',

@@ -88,7 +88,7 @@ class DeleteControllerTest extends ControllerTestCase
         $this->flashBag->expects($this->never())
             ->method('add');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')

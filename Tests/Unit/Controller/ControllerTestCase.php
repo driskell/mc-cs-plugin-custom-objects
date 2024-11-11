@@ -140,7 +140,6 @@ class ControllerTestCase extends \PHPUnit\Framework\TestCase
             ['twig', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $twig],
         ]);
 
-
         $this->container->method('has')->willReturnMap([
             ['twig', true],
         ]);

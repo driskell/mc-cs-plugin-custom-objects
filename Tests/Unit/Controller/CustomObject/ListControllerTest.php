@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomObject;
 
-use AllowDynamicProperties;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomObject\ListController;
 use MauticPlugin\CustomObjectsBundle\DTO\TableConfig;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomObject;
@@ -19,7 +18,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class ListControllerTest extends ControllerTestCase
 {
     private const PAGE = 3;

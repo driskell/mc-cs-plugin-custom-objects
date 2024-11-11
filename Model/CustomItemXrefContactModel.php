@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Model;
 
-use DateTime;
 use Mautic\CoreBundle\Helper\Chart\ChartQuery;
 use Mautic\CoreBundle\Helper\Chart\LineChart;
 use Mautic\CoreBundle\Model\FormModel;
@@ -16,8 +15,8 @@ class CustomItemXrefContactModel extends FormModel
      * @return mixed[]
      */
     public function getLinksLineChartData(
-        DateTime $from,
-        DateTime $to,
+        \DateTime $from,
+        \DateTime $to,
         CustomItem $customItem
     ): array {
         $chart = new LineChart(null, $from, $to);

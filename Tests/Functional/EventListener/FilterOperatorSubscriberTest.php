@@ -70,17 +70,17 @@ class FilterOperatorSubscriberTest extends MauticMysqlTestCase
 
         // 3) create a segment with filter : email > not in custom objects > select custom object
         $filters = [[
-                'object'     => 'lead',
-                'glue'       => 'and',
-                'field'      => 'email',
-                'type'       => 'text',
-                'operator'   => 'notInCustomObjects',
-                'properties' => [
-                    'filter' => 'custom-object:'.$customObject->getId().':name',
-                ],
-                'filter'     => 'custom-object:'.$customObject->getId().':name',
-                'display'    => null,
-            ]];
+            'object'     => 'lead',
+            'glue'       => 'and',
+            'field'      => 'email',
+            'type'       => 'text',
+            'operator'   => 'notInCustomObjects',
+            'properties' => [
+                'filter' => 'custom-object:'.$customObject->getId().':name',
+            ],
+            'filter'     => 'custom-object:'.$customObject->getId().':name',
+            'display'    => null,
+        ]];
         $segment = new LeadList();
         $segment->setName('Test Segment A');
         $segment->setPublicName('Test Segment A');

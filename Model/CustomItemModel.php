@@ -38,7 +38,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use UnexpectedValueException;
 
 class CustomItemModel extends FormModel
 {
@@ -136,7 +135,7 @@ class CustomItemModel extends FormModel
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     public function linkEntity(CustomItem $customItem, string $entityType, int $entityId): CustomItemXrefInterface
     {
@@ -145,7 +144,7 @@ class CustomItemModel extends FormModel
         $this->dispatcher->dispatch($event, CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY_DISCOVERY);
 
         if (!$event->getXrefEntity() instanceof CustomItemXrefInterface) {
-            throw new UnexpectedValueException("Entity {$entityType} was not able to be linked to {$customItem->getName()} ({$customItem->getId()})");
+            throw new \UnexpectedValueException("Entity {$entityType} was not able to be linked to {$customItem->getName()} ({$customItem->getId()})");
         }
 
         $this->dispatcher->dispatch(new CustomItemXrefEntityEvent($event->getXrefEntity()), CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY);
@@ -154,7 +153,7 @@ class CustomItemModel extends FormModel
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     public function unlinkEntity(CustomItem $customItem, string $entityType, int $entityId): CustomItemXrefInterface
     {
@@ -163,7 +162,7 @@ class CustomItemModel extends FormModel
         $this->dispatcher->dispatch($event, CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY_DISCOVERY);
 
         if (!$event->getXrefEntity() instanceof CustomItemXrefInterface) {
-            throw new UnexpectedValueException("Entity {$entityType} was not able to be unlinked from {$customItem->getName()} ({$customItem->getId()})");
+            throw new \UnexpectedValueException("Entity {$entityType} was not able to be unlinked from {$customItem->getName()} ({$customItem->getId()})");
         }
 
         $this->dispatcher->dispatch(new CustomItemXrefEntityEvent($event->getXrefEntity()), CustomItemEvents::ON_CUSTOM_ITEM_UNLINK_ENTITY);
@@ -173,7 +172,7 @@ class CustomItemModel extends FormModel
 
     public function delete(CustomItem $customItem): void
     {
-        //take note of ID before doctrine wipes it out
+        // take note of ID before doctrine wipes it out
         $id    = $customItem->getId();
         $event = new CustomItemEvent($customItem);
         $this->dispatcher->dispatch($event, CustomItemEvents::ON_CUSTOM_ITEM_PRE_DELETE);
@@ -181,7 +180,7 @@ class CustomItemModel extends FormModel
         $this->em->remove($customItem);
         $this->em->flush();
 
-        //set the id for use in events
+        // set the id for use in events
         $customItem->deletedId = $id;
         $this->dispatcher->dispatch($event, CustomItemEvents::ON_CUSTOM_ITEM_POST_DELETE);
     }
@@ -213,7 +212,7 @@ class CustomItemModel extends FormModel
         $this->dispatcher->dispatch(
             new CustomItemListQueryEvent($queryBuilder, $tableConfig),
             CustomItemEvents::ON_CUSTOM_ITEM_LIST_ORM_QUERY
-         );
+        );
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -330,7 +329,7 @@ class CustomItemModel extends FormModel
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     private function createListOrmQueryBuilder(TableConfig $tableConfig): QueryBuilder
     {
@@ -354,7 +353,7 @@ class CustomItemModel extends FormModel
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     private function createListDbalQueryBuilder(TableConfig $tableConfig): DbalQueryBuilder
     {
@@ -373,12 +372,12 @@ class CustomItemModel extends FormModel
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     private function validateTableConfig(TableConfig $tableConfig): void
     {
         if (empty($tableConfig->getParameter('customObjectId'))) {
-            throw new UnexpectedValueException("customObjectId cannot be empty. It's required for permission management");
+            throw new \UnexpectedValueException("customObjectId cannot be empty. It's required for permission management");
         }
     }
 

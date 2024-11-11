@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomItem;
 
-use AllowDynamicProperties;
 use Mautic\CoreBundle\Model\NotificationModel;
 use Mautic\UserBundle\Entity\User;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomItem\FormController;
@@ -27,7 +26,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class FormControllerTest extends ControllerTestCase
 {
     public const OBJECT_ID = 33;
@@ -85,6 +84,7 @@ class FormControllerTest extends ControllerTestCase
      * @var FormController
      */
     private $formController;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -368,7 +368,7 @@ class FormControllerTest extends ControllerTestCase
         $this->routeProvider->expects($this->never())
             ->method('buildEditRoute');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')
@@ -598,7 +598,7 @@ class FormControllerTest extends ControllerTestCase
         $this->routeProvider->expects($this->never())
             ->method('buildEditRouteWithRedirectToContact');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')
@@ -747,7 +747,7 @@ class FormControllerTest extends ControllerTestCase
         $this->routeProvider->expects($this->never())
             ->method('buildCloneRoute');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')

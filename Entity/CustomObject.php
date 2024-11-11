@@ -50,7 +50,9 @@ class CustomObject extends FormEntity implements UniqueEntityInterface
 
     /**
      * @var int|null
+     *
      * @Groups({"custom_object:read"})
+     *
      * @ApiProperty(
      *     attributes={
      *         "openapi_context"={
@@ -65,66 +67,82 @@ class CustomObject extends FormEntity implements UniqueEntityInterface
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $alias;
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $nameSingular;
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $namePlural;
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $description;
 
     /**
      * @var string|null
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $language;
 
     /**
      * @var Category|null
+     *
      * @Assert\Valid
      **/
     private $category;
 
     /**
      * @var ArrayCollection
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $customFields;
 
     /**
      * @var int|null
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
      */
     private $type = self::TYPE_MASTER;
 
     /**
      * @var CustomObject|null
+     *
      * @OneToOne(targetEntity="CustomObject")
+     *
      * @JoinColumn(name="master_object", referencedColumnName="id")
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
+     *
      * @ApiProperty(readableLink=false, writableLink=false)
      */
     private $masterObject;
 
     /**
      * @var CustomObject|null
+     *
      * @OneToOne(targetEntity="CustomObject")
+     *
      * @JoinColumn(name="relationship_object", referencedColumnName="id", onDelete="SET NULL")
+     *
      * @Groups({"custom_object:read", "custom_object:write"})
+     *
      * @ApiProperty(readableLink=false, writableLink=false)
      */
     private $relationshipObject;

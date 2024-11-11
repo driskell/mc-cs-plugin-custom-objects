@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\CustomItem;
 
-use AllowDynamicProperties;
 use Mautic\CoreBundle\Model\NotificationModel;
 use MauticPlugin\CustomObjectsBundle\Controller\CustomItem\DeleteController;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomItem;
@@ -20,7 +19,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-#[AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class DeleteControllerTest extends ControllerTestCase
 {
     private const OBJECT_ID = 33;
@@ -90,7 +89,7 @@ class DeleteControllerTest extends ControllerTestCase
             ->method('trans')
             ->willReturn('Item not found message');
 
-        $post  = $this->createMock(ParameterBag::class);
+        $post                   = $this->createMock(ParameterBag::class);
         $this->request->request = $post;
         $post->expects($this->once())
             ->method('all')

@@ -11,7 +11,6 @@ use MauticPlugin\CustomObjectsBundle\Exception\NotFoundException;
 use MauticPlugin\CustomObjectsBundle\Model\CustomItemModel;
 use MauticPlugin\CustomObjectsBundle\Provider\CustomItemPermissionProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use UnexpectedValueException;
 
 class UnlinkController extends JsonController
 {
@@ -45,7 +44,7 @@ class UnlinkController extends JsonController
                 'custom.item.unlinked',
                 ['%itemId%' => $customItem->getId(), '%itemName%' => $customItem->getName(), '%entityType%' => $entityType, '%entityId%' => $entityId]
             );
-        } catch (ForbiddenException|NotFoundException|UnexpectedValueException $e) {
+        } catch (ForbiddenException|NotFoundException|\UnexpectedValueException $e) {
             $flashBag->add($e->getMessage(), [], FlashBag::LEVEL_ERROR);
         }
 

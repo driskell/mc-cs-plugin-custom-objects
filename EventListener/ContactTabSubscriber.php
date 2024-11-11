@@ -106,7 +106,7 @@ class ContactTabSubscriber implements EventSubscriberInterface
             $event->addTemplate('@CustomObjects/SubscribedEvents/Tab/modal.html.twig');
         }
 
-        if ($event->checkContext( '@MauticLead/Lead/lead.html.twig','tabs.content')) {
+        if ($event->checkContext('@MauticLead/Lead/lead.html.twig', 'tabs.content')) {
             $vars    = $event->getVars();
             $objects = $this->getCustomObjects();
 

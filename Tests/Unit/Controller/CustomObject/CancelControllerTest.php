@@ -29,9 +29,9 @@ class CancelControllerTest extends ControllerTestCase
         parent::setUp();
 
         $this->sessionProviderFactory  = $this->createMock(SessionProviderFactory::class);
-        $this->sessionProvider   = $this->createMock(SessionProvider::class);
-        $this->routeProvider     = $this->createMock(CustomObjectRouteProvider::class);
-        $this->customObjectModel = $this->createMock(CustomObjectModel::class);
+        $this->sessionProvider         = $this->createMock(SessionProvider::class);
+        $this->routeProvider           = $this->createMock(CustomObjectRouteProvider::class);
+        $this->customObjectModel       = $this->createMock(CustomObjectModel::class);
 
         $this->cancelController = new CancelController(
             $this->managerRegistry,

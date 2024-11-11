@@ -12,7 +12,6 @@ use MauticPlugin\CustomObjectsBundle\Exception\NotFoundException;
 use MauticPlugin\CustomObjectsBundle\Model\CustomItemModel;
 use MauticPlugin\CustomObjectsBundle\Provider\CustomItemPermissionProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use UnexpectedValueException;
 
 class LinkController extends JsonController
 {
@@ -41,7 +40,7 @@ class LinkController extends JsonController
                 ['%itemId%' => $itemId, '%entityType%' => $entityType, '%entityId%' => $entityId],
                 FlashBag::LEVEL_ERROR
             );
-        } catch (ForbiddenException|NotFoundException|UnexpectedValueException $e) {
+        } catch (ForbiddenException|NotFoundException|\UnexpectedValueException $e) {
             $flashBag->add($e->getMessage(), [], FlashBag::LEVEL_ERROR);
         }
 

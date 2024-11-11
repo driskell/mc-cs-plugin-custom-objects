@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy;
 
-
 class CampaignConditionTest extends MauticMysqlTestCase
 {
     use CustomObjectsTrait;
