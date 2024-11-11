@@ -86,7 +86,11 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
         $scheduledDateTime = $customItemExportScheduler->getScheduledDateTime();
         $fileName          = 'custom_items_export_'.$scheduledDateTime->format(self::EXPORT_FILE_NAME_DATE_FORMAT).'.csv';
 
-        $filePath = $this->exportHelper->getValidContactExportFileName($fileName, 'custom_item_export_dir');
+        // $filePath = $this->exportHelper->getValidExportFileName($fileName, 'custom_item_export_dir');
+        //$filePath = $this->exportHelper->getValidContactExportFileName($fileName, 'custom_item_export_dir');
+        //$filePath = $this->exportHelper->getValidExportFileName($fileName, 'custom_item_export_dir');
+
+        $filePath    = $this->coreParametersHelper->get('custom_item_export_dir').'/'.$fileName;
 
         $this->filePath = $filePath;
 
@@ -280,4 +284,23 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
             ]
         );
     }
+
+//    public function getValidExportFileName(string $fileName, string $directory): string
+//    {
+//        $contactExportDir = $this->coreParametersHelper->get($directory);
+//        $this->filePathResolver->createDirectory($contactExportDir);
+//        $filePath     = $contactExportDir.'/'.$fileName;
+//        $fileName     = (string) pathinfo($filePath, PATHINFO_FILENAME);
+//        $extension    = (string) pathinfo($filePath, PATHINFO_EXTENSION);
+//        $originalName = $fileName;
+//        $i            = 1;
+//
+//        while (file_exists($filePath)) {
+//            $fileName = $originalName.'_'.$i;
+//            $filePath = $contactExportDir.'/'.$fileName.'.'.$extension;
+//            ++$i;
+//        }
+//
+//        return $filePath;
+//    }
 }
