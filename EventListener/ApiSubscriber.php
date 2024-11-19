@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\EventListener;
 
+use Doctrine\ORM\EntityManager;
+use InvalidArgumentException;
 use Mautic\ApiBundle\ApiEvents;
 use Mautic\ApiBundle\Event\ApiEntityEvent;
 use Mautic\LeadBundle\Controller\Api\LeadApiController;
@@ -24,7 +26,8 @@ class ApiSubscriber implements EventSubscriberInterface
     public function __construct(
         private ConfigProvider $configProvider,
         private CustomObjectModel $customObjectModel,
-        private CustomItemModel $customItemModel
+        private CustomItemModel $customItemModel,
+        private EntityManager $entityManager,
     ) {
     }
 
@@ -82,7 +85,8 @@ class ApiSubscriber implements EventSubscriberInterface
                 $customItem = $this->customItemModel->save($customItem, $dryRun);
 
                 if (!$dryRun) {
-                    $this->customItemModel->linkEntity($customItem, 'contact', (int) $contact->getId());
+                    $link = $this->customItemModel->linkEntity($customItem, 'contact', (int) $contact->getId());
+                    $this->entityManager->detach($link);
                 }
             }
         }
