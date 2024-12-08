@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Helper;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\ORM\EntityManager;
 use Mautic\LeadBundle\Segment\ContactSegmentFilter;
-use Mautic\LeadBundle\Segment\Query\Expression\CompositeExpression;
 use Mautic\LeadBundle\Segment\Query\QueryBuilder as SegmentQueryBuilder;
 use Mautic\LeadBundle\Segment\RandomParameterName;
 use MauticPlugin\CustomObjectsBundle\Exception\InvalidArgumentException;
@@ -140,7 +140,7 @@ class QueryFilterHelper
             case 'notIn':
             case 'multiselect':
             case 'in':
-                $valueType      = Connection::PARAM_STR_ARRAY;
+                $valueType      = ArrayParameterType::STRING;
                 $segmentQueryBuilder->setParameter($valueParameter, $value, $valueType);
                 break;
             default:
@@ -199,7 +199,7 @@ class QueryFilterHelper
                 }
                 break;
             case 'notEmpty':
-                $expression = $customQuery->expr()->andX(
+                $expression = $customQuery->expr()->and(
                     $customQuery->expr()->isNotNull($tableAlias.'_value.value'),
                 );
                 if ($filter->doesColumnSupportEmptyValue()) {
@@ -220,7 +220,7 @@ class QueryFilterHelper
 
                 break;
             case 'neq':
-                $expression     = $customQuery->expr()->orX(
+                $expression     = $customQuery->expr()->or(
                     $customQuery->expr()->neq($tableAlias.'_value.value', ":{$valueParameter}"),
                     $customQuery->expr()->isNull($tableAlias.'_value.value')
                 );
@@ -231,7 +231,7 @@ class QueryFilterHelper
 
                 break;
             case 'notLike':
-                $expression = $customQuery->expr()->orX(
+                $expression = $customQuery->expr()->or(
                     $customQuery->expr()->isNull($tableAlias.'_value.value'),
                     $customQuery->expr()->like($tableAlias.'_value.value', ":{$valueParameter}")
                 );
@@ -273,14 +273,14 @@ class QueryFilterHelper
     ) {
         switch ($operator) {
             case 'empty':
-                $expression = $customQuery->expr()->orX(
+                $expression = $customQuery->expr()->or(
                     $customQuery->expr()->isNull($tableAlias.'_item.name'),
                     $customQuery->expr()->eq($tableAlias.'_item.name', $customQuery->expr()->literal(''))
                 );
 
                 break;
             case 'notEmpty':
-                $expression = $customQuery->expr()->andX(
+                $expression = $customQuery->expr()->and(
                     $customQuery->expr()->isNotNull($tableAlias.'_item.name'),
                     $customQuery->expr()->neq($tableAlias.'_item.name', $customQuery->expr()->literal(''))
                 );
@@ -302,7 +302,7 @@ class QueryFilterHelper
 
                 break;
             case 'notLike':
-                $expression = $customQuery->expr()->orX(
+                $expression = $customQuery->expr()->or(
                     $customQuery->expr()->isNull($tableAlias.'_item.name'),
                     $customQuery->expr()->like($tableAlias.'_item.name', ":{$valueParameter}")
                 );
