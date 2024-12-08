@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MauticPlugin\CustomObjectsBundle\EventListener;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Mautic\LeadBundle\Event\SegmentDictionaryGenerationEvent;
 use Mautic\LeadBundle\LeadEvents;
@@ -41,7 +42,7 @@ class SegmentFiltersDictionarySubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws Exception
      */
     public function onGenerateSegmentDictionary(SegmentDictionaryGenerationEvent $event): void
     {
@@ -60,7 +61,7 @@ class SegmentFiltersDictionarySubscriber implements EventSubscriberInterface
             ->leftJoin('o', MAUTIC_TABLE_PREFIX.'custom_field', 'f', 'f.custom_object_id = o.id');
 
         $registeredObjects                = [];
-        $fields                           = $this->executeSelect($queryBuilder)->fetchAll();
+        $fields                           = $this->executeSelect($queryBuilder)->fetchAllAssociative();
         $isCustomObjectMergeFilterEnabled = $this->configProvider->isCustomObjectMergeFilterEnabled();
         $cmoType                          = CustomItemNameFilterQueryBuilder::getServiceId();
         $cmfType                          = CustomFieldFilterQueryBuilder::getServiceId();

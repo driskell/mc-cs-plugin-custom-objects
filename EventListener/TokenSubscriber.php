@@ -246,7 +246,7 @@ class TokenSubscriber implements EventSubscriberInterface
             } elseif ('template' && isset($source[0]) && 'campaign.event' === $source[0] && !empty($source[1])) {
                 $campaignEventId = (int) $source[1];
 
-                /** @var Event $campaignEvent */
+                /** @var ?Event $campaignEvent */
                 $campaignEvent = $this->eventModel->getEntity($campaignEventId);
 
                 if (!$campaignEvent) {

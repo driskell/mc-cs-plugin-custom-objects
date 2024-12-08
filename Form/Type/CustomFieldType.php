@@ -270,7 +270,7 @@ class CustomFieldType extends AbstractType
     private function buildPanelFormFields(FormBuilderInterface $builder): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
-            /** @var CustomField $customField */
+            /** @var ?CustomField $customField */
             $customField = $event->getData();
             $form        = $event->getForm();
 

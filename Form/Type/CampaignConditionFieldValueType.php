@@ -74,7 +74,7 @@ class CampaignConditionFieldValueType extends AbstractType
                 'attr'     => [
                     'class' => 'form-control',
                 ],
-                'choice_attr' => $optionAttr,
+                'choice_attr' => $optionAttr ?? [],
             ]
         );
 

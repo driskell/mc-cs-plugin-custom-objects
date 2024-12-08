@@ -687,7 +687,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
     /**
      * @Groups({"custom_field:read", "custom_object:read"})
      *
-     * @return \DateTime
+     * @return \DateTimeInterface|null
      */
     public function getDateAdded()
     {
@@ -697,7 +697,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
     /**
      * @Groups({"custom_field:read", "custom_object:read"})
      *
-     * @return \DateTime
+     * @return \DateTimeInterface|null
      */
     public function getDateModified()
     {
