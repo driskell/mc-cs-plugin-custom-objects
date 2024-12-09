@@ -250,7 +250,7 @@ class CustomFieldValueModelTest extends \PHPUnit\Framework\TestCase
 
         $this->customItem->expects($this->exactly(2))
             ->method('getId')
-            ->willReturn(null);
+            ->willReturn(0);
 
         $this->entityManager->expects($this->once())
             ->method('persist')

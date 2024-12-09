@@ -14,6 +14,11 @@ use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 class CustomFieldValueOption extends AbstractCustomFieldValue
 {
     /**
+     * @var int|null
+     */
+    private $id;
+
+    /**
      * @var string[]|string|null
      */
     private $value;

@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomItemXrefEntityDiscoveryEvent extends Event
 {
-    private ?CustomItemXrefInterface $customItemXrefEntity;
+    private ?CustomItemXrefInterface $customItemXrefEntity = null;
 
     public function __construct(
         private CustomItem $customItem,
