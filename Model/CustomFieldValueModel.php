@@ -262,7 +262,7 @@ class CustomFieldValueModel
         }, array_keys($tableToCustomFieldIds));
 
         // extract item IDs
-        $itemIds = array_map(function (CustomItem $customItem) {
+        $itemIds = array_map(function (CustomItem $customItem): int {
             return $customItem->getId();
         }, $customItems);
 

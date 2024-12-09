@@ -84,17 +84,6 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     private $name;
 
     /**
-     * @var CustomObject
-     *
-     * @ManyToOne(targetEntity="CustomObject")
-     *
-     * @JoinColumn(name="custom_object_id", referencedColumnName="id")
-     *
-     * @Groups({"custom_item:read", "custom_item:write"})
-     */
-    private $customObject;
-
-    /**
      * @var CustomItem|null
      */
     private $childCustomItem;
@@ -190,9 +179,17 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     private ?string $uniqueHash = null;
 
-    public function __construct(CustomObject $initCustomObject)
-    {
-        $this->customObject              = $initCustomObject;
+    public function __construct(/**
+     * @var CustomObject
+     *
+     * @ManyToOne(targetEntity="CustomObject")
+     *
+     * @JoinColumn(name="custom_object_id", referencedColumnName="id")
+     *
+     * @Groups({"custom_item:read", "custom_item:write"})
+     */
+        private CustomObject $customObject
+    ) {
         $this->customFieldValues         = new ArrayCollection();
         $this->contactReferences         = new ArrayCollection();
         $this->companyReferences         = new ArrayCollection();
