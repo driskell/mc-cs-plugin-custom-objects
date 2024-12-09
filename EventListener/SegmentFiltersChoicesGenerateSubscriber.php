@@ -23,39 +23,18 @@ class SegmentFiltersChoicesGenerateSubscriber implements EventSubscriberInterfac
     use OperatorListTrait;
 
     /**
-     * @var CustomObjectRepository
-     */
-    private $customObjectRepository;
-
-    /**
      * @var TranslatorInterface
      */
     private $translator;
 
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var CustomFieldTypeProvider
-     */
-    private $fieldTypeProvider;
-
-    private TypeOperatorProviderInterface $typeOperatorProvider;
-
     public function __construct(
-        CustomObjectRepository $customObjectRepository,
+        private CustomObjectRepository $customObjectRepository,
         TranslatorInterface $translator,
-        ConfigProvider $configProvider,
-        CustomFieldTypeProvider $fieldTypeProvider,
-        TypeOperatorProviderInterface $typeOperatorProvider
+        private ConfigProvider $configProvider,
+        private CustomFieldTypeProvider $fieldTypeProvider,
+        private TypeOperatorProviderInterface $typeOperatorProvider
     ) {
-        $this->customObjectRepository  = $customObjectRepository;
-        $this->translator              = $translator;
-        $this->configProvider          = $configProvider;
-        $this->fieldTypeProvider       = $fieldTypeProvider;
-        $this->typeOperatorProvider    = $typeOperatorProvider;
+        $this->translator = $translator;
     }
 
     /**

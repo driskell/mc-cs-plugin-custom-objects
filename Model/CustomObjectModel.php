@@ -290,7 +290,7 @@ class CustomObjectModel extends FormModel
 
         try {
             $this->permissionProvider->isGranted('viewother');
-        } catch (ForbiddenException $e) {
+        } catch (ForbiddenException) {
             if (!isset($args['filter'])) {
                 $args['filter'] = [];
             }
@@ -316,7 +316,7 @@ class CustomObjectModel extends FormModel
     {
         try {
             $this->permissionProvider->isGranted('viewother');
-        } catch (ForbiddenException $e) {
+        } catch (ForbiddenException) {
             $queryBuilder->andWhere(CustomObject::TABLE_ALIAS.'.createdBy', $this->userHelper->getUser()->getId());
         }
 
@@ -340,7 +340,7 @@ class CustomObjectModel extends FormModel
     {
         return array_filter(
             $this->fetchAllPublishedEntities(),
-            function ($item) {
+            function ($item): bool {
                 $type = $item->getType();
 
                 return CustomObject::TYPE_MASTER === $type || null === $type;

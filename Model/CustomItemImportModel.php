@@ -79,7 +79,7 @@ class CustomItemImportModel extends FormModel
 
             try {
                 $customFieldValue = $customItem->findCustomFieldValueForFieldId((int) $customFieldId);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 $customFieldValue = $customItem->createNewCustomFieldValueByFieldId((int) $customFieldId, $csvValue);
             }
 
@@ -153,7 +153,7 @@ class CustomItemImportModel extends FormModel
             try {
                 $customItem = $this->customItemModel->fetchEntity((int) $rowData[$idKey]);
                 $customItem = $this->customItemModel->populateCustomFields($customItem);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
             }
         }
 

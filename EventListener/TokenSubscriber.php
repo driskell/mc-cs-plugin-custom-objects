@@ -48,85 +48,19 @@ class TokenSubscriber implements EventSubscriberInterface
     use MatchFilterForLeadTrait;
     use QueryBuilderManipulatorTrait;
 
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var QueryFilterHelper
-     */
-    private $queryFilterHelper;
-
-    /**
-     * @var QueryFilterFactory
-     */
-    private $queryFilterFactory;
-
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    /**
-     * @var CustomItemModel
-     */
-    private $customItemModel;
-
-    /**
-     * @var CustomFieldModel
-     */
-    private $customFieldModel;
-
-    /**
-     * @var TokenParser
-     */
-    private $tokenParser;
-
-    /**
-     * @var EventModel
-     */
-    private $eventModel;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var TokenFormatter
-     */
-    private $tokenFormatter;
-
-    /**
-     * @var int
-     */
-    private $leadCustomItemFetchLimit;
-
     public function __construct(
-        ConfigProvider $configProvider,
-        QueryFilterHelper $queryFilterHelper,
-        QueryFilterFactory $queryFilterFactory,
-        CustomObjectModel $customObjectModel,
-        CustomItemModel $customItemModel,
-        CustomFieldModel $customFieldModel,
-        TokenParser $tokenParser,
-        EventModel $eventModel,
-        EventDispatcherInterface $eventDispatcher,
-        TokenFormatter $tokenFormatter,
-        int $leadCustomItemFetchLimit
+        private ConfigProvider $configProvider,
+        private QueryFilterHelper $queryFilterHelper,
+        private QueryFilterFactory $queryFilterFactory,
+        private CustomObjectModel $customObjectModel,
+        private CustomItemModel $customItemModel,
+        private CustomFieldModel $customFieldModel,
+        private TokenParser $tokenParser,
+        private EventModel $eventModel,
+        private EventDispatcherInterface $eventDispatcher,
+        private TokenFormatter $tokenFormatter,
+        private int $leadCustomItemFetchLimit
     ) {
-        $this->configProvider                    = $configProvider;
-        $this->queryFilterHelper                 = $queryFilterHelper;
-        $this->queryFilterFactory                = $queryFilterFactory;
-        $this->customObjectModel                 = $customObjectModel;
-        $this->customItemModel                   = $customItemModel;
-        $this->customFieldModel                  = $customFieldModel;
-        $this->tokenParser                       = $tokenParser;
-        $this->eventModel                        = $eventModel;
-        $this->eventDispatcher                   = $eventDispatcher;
-        $this->tokenFormatter                    = $tokenFormatter;
-        $this->leadCustomItemFetchLimit          = $leadCustomItemFetchLimit;
     }
 
     /**
@@ -187,7 +121,7 @@ class TokenSubscriber implements EventSubscriberInterface
             try {
                 $customObject = $this->customObjectModel->fetchEntityByAlias($token->getCustomObjectAlias());
                 $fieldValues  = $this->getCustomFieldValues($customObject, $token, $event);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 $fieldValues = null;
             }
 
@@ -206,7 +140,7 @@ class TokenSubscriber implements EventSubscriberInterface
                         $result = $formatEvent->hasBeenFormatted() ?
                             $formatEvent->getFormattedString() :
                             $this->tokenFormatter->format($fieldValues, TokenFormatter::DEFAULT_FORMAT);
-                    } catch (InvalidCustomObjectFormatListException $e) {
+                    } catch (InvalidCustomObjectFormatListException) {
                         $result = $this->tokenFormatter->format($fieldValues, TokenFormatter::DEFAULT_FORMAT);
                     }
                 } else {
@@ -267,7 +201,7 @@ class TokenSubscriber implements EventSubscriberInterface
                 try {
                     $queryAlias        = 'filter_'.$id;
                     $innerQueryBuilder = $this->queryFilterFactory->configureQueryBuilderFromSegmentFilter($filter, $queryAlias);
-                } catch (InvalidSegmentFilterException $e) {
+                } catch (InvalidSegmentFilterException) {
                     continue;
                 }
 
@@ -335,7 +269,7 @@ class TokenSubscriber implements EventSubscriberInterface
                     $fieldValue->setValue($fieldValue->getCustomField()->getDefaultValue());
                 }
                 $fieldValues[] = $fieldValue->getCustomField()->getTypeObject()->valueToString($fieldValue);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 // Custom field not found.
             }
         }
@@ -393,13 +327,13 @@ class TokenSubscriber implements EventSubscriberInterface
                     continue;
                 }
 
-                if ('cmf_' === substr($condition['field'], 0, 4)) {
+                if (str_starts_with($condition['field'], 'cmf_')) {
                     $customField  = $this->customFieldModel->fetchEntity(
                         (int) explode('cmf_', $condition['field'])[1]
                     );
                     $customObject = $customField->getCustomObject();
                     $fieldAlias   = $customField->getAlias();
-                } elseif ('cmo_' === substr($condition['field'], 0, 4)) {
+                } elseif (str_starts_with($condition['field'], 'cmo_')) {
                     $customObject = $this->customObjectModel->fetchEntity(
                         (int) explode('cmo_', $condition['field'])[1]
                     );
@@ -416,7 +350,7 @@ class TokenSubscriber implements EventSubscriberInterface
                 $result = $this->getCustomFieldValue($customObject, $fieldAlias, $cachedCustomItems[$key]);
 
                 $customFieldValues[$condition['field']] = $result;
-            } catch (NotFoundException|InvalidCustomObjectFormatListException $e) {
+            } catch (NotFoundException|InvalidCustomObjectFormatListException) {
                 continue;
             }
         }
@@ -461,7 +395,7 @@ class TokenSubscriber implements EventSubscriberInterface
                 } else {
                     $fieldValues[] = $fieldValue->getCustomField()->getTypeObject()->valueToString($fieldValue);
                 }
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 // Custom field not found.
             }
         }
@@ -639,14 +573,14 @@ class TokenSubscriber implements EventSubscriberInterface
                             $groups[$groupNum] = 1 !== preg_match('/'.$filterVal.'/i', $leadVal);
                             break;
                         case 'startsWith':
-                            $groups[$groupNum] = 0 === strncmp($leadVal, $filterVal, strlen($filterVal));
+                            $groups[$groupNum] = str_starts_with($leadVal, $filterVal);
                             break;
                         case 'endsWith':
                             $endOfString       = substr($leadVal, strlen($leadVal) - strlen($filterVal));
                             $groups[$groupNum] = 0 === strcmp($endOfString, $filterVal);
                             break;
                         case 'contains':
-                            $groups[$groupNum] = false !== strpos((string) $leadVal, (string) $filterVal);
+                            $groups[$groupNum] = str_contains((string) $leadVal, (string) $filterVal);
                             break;
                         default:
                             throw new OperatorsNotFoundException('Operator is not defined or invalid operator found.');

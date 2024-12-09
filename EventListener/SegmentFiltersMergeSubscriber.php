@@ -11,11 +11,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SegmentFiltersMergeSubscriber implements EventSubscriberInterface
 {
-    private ConfigProvider $configProvider;
-
-    public function __construct(ConfigProvider $configProvider)
+    public function __construct(private ConfigProvider $configProvider)
     {
-        $this->configProvider = $configProvider;
     }
 
     /**

@@ -158,20 +158,12 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
                 foreach ($customFields as $customField) {
                     $fieldValue = $listData->getFields($customItem->getId())[$customField->getId()]->getValue();
 
-                    switch ($customField->getType()) {
-                        case 'date':
-                            $value = $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d') : $fieldValue;
-                            break;
-
-                        case 'datetime':
-                            $value = $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d H:i:s') : $fieldValue;
-                            break;
-
-                        case 'multiselect': $value = is_array($fieldValue) ? implode(',', $fieldValue) : $fieldValue;
-                            break;
-
-                        default: $value = $fieldValue;
-                    }
+                    $value = match ($customField->getType()) {
+                        'date' => $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d') : $fieldValue,
+                        'datetime' => $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d H:i:s') : $fieldValue,
+                        'multiselect' => is_array($fieldValue) ? implode(',', $fieldValue) : $fieldValue,
+                         default => $fieldValue,
+                    };
 
                     $rowData[] = $value;
                 }

@@ -21,14 +21,10 @@ class SegmentFiltersDictionarySubscriber implements EventSubscriberInterface
 {
     use DbalQueryTrait;
 
-    private ManagerRegistry $doctrineRegistry;
-
-    private ConfigProvider $configProvider;
-
-    public function __construct(ManagerRegistry $registry, ConfigProvider $configProvider)
-    {
-        $this->doctrineRegistry = $registry;
-        $this->configProvider   = $configProvider;
+    public function __construct(
+        private ManagerRegistry $doctrineRegistry,
+        private ConfigProvider $configProvider
+    ) {
     }
 
     /**

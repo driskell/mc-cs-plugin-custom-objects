@@ -14,25 +14,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class OptionsToStringTransformer implements DataTransformerInterface
 {
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
+    private array $customFieldCache = [];
 
-    /**
-     * @var CustomFieldModel
-     */
-    private $customFieldModel;
-
-    /**
-     * @var CustomField[]
-     */
-    private $customFieldCache = [];
-
-    public function __construct(SerializerInterface $serializer, CustomFieldModel $customFieldModel)
+    public function __construct(private SerializerInterface $serializer, private CustomFieldModel $customFieldModel)
     {
-        $this->serializer       = $serializer;
-        $this->customFieldModel = $customFieldModel;
     }
 
     /**
@@ -48,7 +33,7 @@ class OptionsToStringTransformer implements DataTransformerInterface
         }
 
         return $this->serializer->serialize(
-            $options->map(function (CustomFieldOption $option) {
+            $options->map(function (CustomFieldOption $option): array {
                 return $option->__toArray();
             })->toArray(),
             'json'

@@ -179,7 +179,7 @@ class CustomFieldModel extends FormModel
     {
         try {
             $this->permissionProvider->isGranted('viewother');
-        } catch (ForbiddenException $e) {
+        } catch (ForbiddenException) {
             if (!isset($args['filter'])) {
                 $args['filter'] = [];
             }

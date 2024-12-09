@@ -294,17 +294,11 @@ class CustomItemModel extends FormModel
      */
     public function getFieldListData(CustomObject $customObject, array $customItems, string $filterEntityType): ?CustomItemFieldListData
     {
-        switch ($filterEntityType) {
-            case 'customItem':
-                $customFields = $customObject->getFieldsShowInCustomObjectDetailList();
-                break;
-            case 'contact':
-                $customFields = $customObject->getFieldsShowInContactDetailList();
-                break;
-            default:
-                $customFields = $customObject->getPublishedFields();
-                break;
-        }
+        $customFields = match ($filterEntityType) {
+            'customItem' => $customObject->getFieldsShowInCustomObjectDetailList(),
+            'contact' => $customObject->getFieldsShowInContactDetailList(),
+             default => $customObject->getPublishedFields(),
+        };
 
         return $this->customFieldValueModel->getItemsListData($customFields, $customItems);
     }
@@ -399,7 +393,7 @@ class CustomItemModel extends FormModel
 
         try {
             $this->permissionProvider->isGranted('viewother', $customObjectId);
-        } catch (ForbiddenException $e) {
+        } catch (ForbiddenException) {
             $queryBuilder->andWhere(CustomItem::TABLE_ALIAS.'.createdBy', $user->getId());
         }
 

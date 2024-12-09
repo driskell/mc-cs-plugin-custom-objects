@@ -6,10 +6,7 @@ namespace MauticPlugin\CustomObjectsBundle\Exception;
 
 class InUseException extends \Exception
 {
-    /**
-     * @var array
-     */
-    private $segmentList = [];
+    private array $segmentList = [];
 
     public function setSegmentList(array $segmentList): void
     {

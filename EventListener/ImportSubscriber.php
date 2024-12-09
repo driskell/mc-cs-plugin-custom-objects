@@ -27,50 +27,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ImportSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    /**
-     * @var CustomItemImportModel
-     */
-    private $customItemImportModel;
-
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var CustomItemPermissionProvider
-     */
-    private $permissionProvider;
-
-    /**
-     * @var CustomFieldRepository
-     */
-    private $customFieldRepository;
-
     public function __construct(
-        CustomObjectModel $customObjectModel,
-        CustomItemImportModel $customItemImportModel,
-        ConfigProvider $configProvider,
-        CustomItemPermissionProvider $permissionProvider,
-        CustomFieldRepository $customFieldRepository,
-        TranslatorInterface $translator
+        private CustomObjectModel $customObjectModel,
+        private CustomItemImportModel $customItemImportModel,
+        private ConfigProvider $configProvider,
+        private CustomItemPermissionProvider $permissionProvider,
+        private CustomFieldRepository $customFieldRepository,
+        private TranslatorInterface $translator
     ) {
-        $this->customObjectModel     = $customObjectModel;
-        $this->customItemImportModel = $customItemImportModel;
-        $this->configProvider        = $configProvider;
-        $this->permissionProvider    = $permissionProvider;
-        $this->customFieldRepository = $customFieldRepository;
-        $this->translator            = $translator;
     }
 
     /**
@@ -102,7 +66,7 @@ class ImportSubscriber implements EventSubscriberInterface
             $event->activeLink      = "#mautic_custom_object_$customObjectId";
             $event->setIndexRoute(CustomItemRouteProvider::ROUTE_LIST, ['objectId' => $customObjectId]);
             $event->stopPropagation();
-        } catch (NotFoundException|ForbiddenException $e) {
+        } catch (NotFoundException|ForbiddenException) {
         }
     }
 
@@ -134,7 +98,7 @@ class ImportSubscriber implements EventSubscriberInterface
                 $customObject->getNamePlural() => $fieldList,
                 'mautic.lead.special_fields'   => $specialFields,
             ];
-        } catch (NotFoundException|ForbiddenException $e) {
+        } catch (NotFoundException|ForbiddenException) {
         }
     }
 
@@ -146,7 +110,7 @@ class ImportSubscriber implements EventSubscriberInterface
 
         try {
             $customObjectId = $this->getCustomObjectId($event->getRouteObjectName());
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException) {
             // This is not a Custom Object import. Abort.
             return;
         }
@@ -195,7 +159,7 @@ class ImportSubscriber implements EventSubscriberInterface
             if ($importLogDto->hasWarning()) {
                 $event->addWarning($importLogDto->getWarningsAsString());
             }
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException) {
             // Not a Custom Object import or the custom object doesn't exist anymore. Move on.
         }
     }
@@ -233,9 +197,9 @@ class ImportSubscriber implements EventSubscriberInterface
     {
         $requiredFields = $this->customFieldRepository->getRequiredCustomFieldsForCustomObject($customObjectId);
 
-        $missingRequiredFields = $requiredFields->filter(function (CustomField $customField) use ($matchedFields) {
+        $missingRequiredFields = $requiredFields->filter(function (CustomField $customField) use ($matchedFields): bool {
             return !array_key_exists($customField->getAlias(), $matchedFields);
-        })->map(function (CustomField $customField) {
+        })->map(function (CustomField $customField): string {
             return "{$customField->getLabel()} ({$customField->getAlias()})";
         });
 

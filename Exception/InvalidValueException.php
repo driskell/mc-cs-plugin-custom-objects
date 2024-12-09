@@ -8,10 +8,7 @@ use MauticPlugin\CustomObjectsBundle\Entity\CustomField;
 
 class InvalidValueException extends \Exception
 {
-    /**
-     * @var CustomField|null
-     */
-    private $customField;
+    private ?CustomField $customField = null;
 
     public function setCustomField(CustomField $customField): void
     {

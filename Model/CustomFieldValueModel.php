@@ -18,22 +18,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CustomFieldValueModel
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
     public function __construct(
-        EntityManager $entityManager,
-        ValidatorInterface $validator
+        private EntityManager $entityManager,
+        private ValidatorInterface $validator
     ) {
-        $this->entityManager = $entityManager;
-        $this->validator     = $validator;
     }
 
     /**
@@ -119,7 +107,7 @@ class CustomFieldValueModel
             return null;
         }
 
-        $columns = $customFields->map(function (CustomField $customField) {
+        $columns = $customFields->map(function (CustomField $customField): ?string {
             return $customField->getLabel();
         });
         $data = $this->buildItemsListData($customFields->toArray(), $customItems);
@@ -224,7 +212,7 @@ class CustomFieldValueModel
         $result = $this->fetchItemsListData($customFields, $customItems);
         $result = $this->transformItemsListDataResult($result);
 
-        return array_reduce($customItems, function (array $data, CustomItem $customItem) use ($customFields, $result) {
+        return array_reduce($customItems, function (array $data, CustomItem $customItem) use ($customFields, $result): array {
             $fields = [];
 
             foreach ($customFields as $customField) {
@@ -250,7 +238,7 @@ class CustomFieldValueModel
     private function fetchItemsListData(array $customFields, array $customItems): array
     {
         // create a map [tableName] = [fieldId, fieldId, ...] for creating queries
-        $tableToCustomFieldIds = array_reduce($customFields, function (array $tables, CustomField $customField) {
+        $tableToCustomFieldIds = array_reduce($customFields, function (array $tables, CustomField $customField): array {
             $tableName = $customField->getTypeObject()->getPrefixedTableName();
 
             if (!isset($tables[$tableName])) {
@@ -295,7 +283,7 @@ class CustomFieldValueModel
      */
     private function transformItemsListDataResult(array $result): array
     {
-        return array_reduce($result, function (array $result, array $row) {
+        return array_reduce($result, function (array $result, array $row): array {
             $itemId  = $row['custom_item_id'];
             $fieldId = $row['custom_field_id'];
 
