@@ -22,36 +22,12 @@ class DynamicContentSubscriber implements EventSubscriberInterface
     use MatchFilterForLeadTrait;
     use DbalQueryTrait;
 
-    /**
-     * @var QueryFilterFactory
-     */
-    private $queryFilterFactory;
-
-    /**
-     * @var QueryFilterHelper
-     */
-    private $queryFilterHelper;
-
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
     public function __construct(
-        QueryFilterFactory $queryFilterFactory,
-        QueryFilterHelper $queryFilterHelper,
-        ConfigProvider $configProvider,
-        LoggerInterface $logger
+        private QueryFilterFactory $queryFilterFactory,
+        private QueryFilterHelper $queryFilterHelper,
+        private ConfigProvider $configProvider,
+        private LoggerInterface $logger
     ) {
-        $this->queryFilterFactory = $queryFilterFactory;
-        $this->queryFilterHelper  = $queryFilterHelper;
-        $this->configProvider     = $configProvider;
-        $this->logger             = $logger;
     }
 
     /**

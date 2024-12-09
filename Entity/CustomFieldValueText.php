@@ -10,16 +10,9 @@ use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 
 class CustomFieldValueText extends AbstractCustomFieldValue
 {
-    /**
-     * @var string|null
-     */
-    private $value;
-
-    public function __construct(CustomField $customField, CustomItem $customItem, ?string $value = null)
+    public function __construct(CustomField $customField, CustomItem $customItem, private ?string $value = null)
     {
         parent::__construct($customField, $customItem);
-
-        $this->value = $value;
     }
 
     /**

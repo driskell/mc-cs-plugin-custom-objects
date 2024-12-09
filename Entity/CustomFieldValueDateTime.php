@@ -10,16 +10,9 @@ use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 
 class CustomFieldValueDateTime extends AbstractCustomFieldValue
 {
-    /**
-     * @var \DateTimeInterface|null
-     */
-    private $value;
-
-    public function __construct(CustomField $customField, CustomItem $customItem, ?\DateTimeInterface $value = null)
+    public function __construct(CustomField $customField, CustomItem $customItem, private ?\DateTimeInterface $value = null)
     {
         parent::__construct($customField, $customItem);
-
-        $this->value = $value;
     }
 
     public static function loadMetadata(ORM\ClassMetadata $metadata): void

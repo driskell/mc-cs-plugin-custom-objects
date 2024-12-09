@@ -30,10 +30,10 @@ class ReportSubscriber implements EventSubscriberInterface
     public const CUSTOM_ITEM_XREF_CUSTOM_ITEM_TABLE_ALIAS = 'cixci';
     public const CUSTOM_ITEM_XREF_CUSTOM_ITEM_TABLE_NAME  = 'custom_item_xref_custom_item';
     public const CUSTOM_ITEM_XREF_CONTACT_TABLE_ALIAS     = 'cil';
-    public const CONTACTS_COMPANIES_XREF = 'cic';
-    public const LEADS_TABLE_ALIAS       = 'l';
-    public const USERS_TABLE_ALIAS       = 'u';
-    public const COMPANIES_TABLE_ALIAS   = 'comp';
+    public const CONTACTS_COMPANIES_XREF                  = 'cic';
+    public const LEADS_TABLE_ALIAS                        = 'l';
+    public const USERS_TABLE_ALIAS                        = 'u';
+    public const COMPANIES_TABLE_ALIAS                    = 'comp';
 
     private ?ArrayCollection $customObjects = null;
 
@@ -109,6 +109,9 @@ class ReportSubscriber implements EventSubscriberInterface
             ->toArray();
     }
 
+    /**
+     * @return mixed[]
+     */
     private function getStandardColumns(string $prefix): array
     {
         return $this->reportHelper->getStandardColumns($prefix, ['description', 'publish_up', 'publish_down']);

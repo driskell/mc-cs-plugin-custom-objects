@@ -168,11 +168,11 @@ class LinkFormController extends AbstractFormController
     ): CustomItem {
         /** @var CustomItemXrefCustomItem|null $relationshipItemXref */
         $relationshipItemXref = $customItem->getCustomItemLowerReferences()
-            ->filter(function (CustomItemXrefCustomItem $item) use ($entityType, $entityId) {
+            ->filter(function (CustomItemXrefCustomItem $item) use ($entityType, $entityId): bool {
                 $higher = $item->getCustomItemHigher();
 
                 return $higher->getRelationsByType($entityType)
-                        ->filter(function ($relation) use ($entityId) {
+                        ->filter(function ($relation) use ($entityId): bool {
                             return (int) $relation->getLinkedEntity()->getId() === (int) $entityId;
                         })->count() > 0;
             })->first();

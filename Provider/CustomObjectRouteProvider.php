@@ -26,14 +26,8 @@ class CustomObjectRouteProvider
 
     public const ROUTE_LINK   = 'mautic_custom_object_link';
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     public function buildListRoute(int $page = 1): string

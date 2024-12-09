@@ -14,25 +14,13 @@ class CustomItemXrefCompany implements CustomItemXrefInterface
     public const TABLE_NAME  = 'custom_item_xref_company';
     public const TABLE_ALIAS = 'CustomItemXrefCompany';
 
-    /**
-     * @var Company
-     */
-    private $company;
+    private \DateTimeInterface $dateAdded;
 
-    /**
-     * @var CustomItem
-     */
-    private $customItem;
-
-    /**
-     * @var \DateTimeInterface
-     */
-    private $dateAdded;
-
-    public function __construct(CustomItem $customItem, Company $company, ?\DateTimeInterface $dateAdded = null)
-    {
-        $this->customItem = $customItem;
-        $this->company    = $company;
+    public function __construct(
+        private CustomItem $customItem,
+        private Company $company,
+        ?\DateTimeInterface $dateAdded = null
+    ) {
         $this->dateAdded  = $dateAdded ?: new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 

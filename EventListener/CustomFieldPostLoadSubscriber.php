@@ -16,14 +16,8 @@ use MauticPlugin\CustomObjectsBundle\Provider\CustomFieldTypeProvider;
  */
 class CustomFieldPostLoadSubscriber implements EventSubscriber
 {
-    /**
-     * @var CustomFieldTypeProvider
-     */
-    private $customFieldTypeProvider;
-
-    public function __construct(CustomFieldTypeProvider $customFieldTypeProvider)
+    public function __construct(private CustomFieldTypeProvider $customFieldTypeProvider)
     {
-        $this->customFieldTypeProvider = $customFieldTypeProvider;
     }
 
     /**

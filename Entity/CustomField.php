@@ -239,7 +239,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
 
     public function __toString(): string
     {
-        return $this->getLabel();
+        return (string) $this->getLabel();
     }
 
     /**
@@ -382,7 +382,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
     /**
      * @param string|null $alias
      */
-    public function setAlias($alias)
+    public function setAlias($alias): void
     {
         $this->isChanged('alias', $alias);
         $this->alias = $alias;
@@ -494,7 +494,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
     {
         try {
             return $this->getTypeObject()->createDefaultValueTransformer()->transform($this->defaultValue);
-        } catch (UndefinedTransformerException $e) {
+        } catch (UndefinedTransformerException) {
             // Nothing to transform, return string below
         }
 
@@ -510,7 +510,7 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
             $this->defaultValue = $this->getTypeObject()->createDefaultValueTransformer()->reverseTransform($defaultValue);
 
             return;
-        } catch (UndefinedTransformerException $e) {
+        } catch (UndefinedTransformerException) {
             // Nothing to transform, use string below
         }
 

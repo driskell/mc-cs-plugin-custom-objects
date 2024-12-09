@@ -609,10 +609,10 @@ parameters:
 			count: 1
 			path: Tests/Unit/Helper/CustomFieldQueryBuilder/CalculatorTest.php
 
-    	-
-    		message: "#^Constant MAUTIC_TABLE_PREFIX not found.$#"
-    		count: 1
-    		path: Tests/Unit/Helper/QueryFilterFactoryTest.php
+		-
+			message: "#^Constant MAUTIC_TABLE_PREFIX not found\\.$#"
+			count: 1
+			path: Tests/Unit/Helper/QueryFilterFactoryTest.php
 
 		-
 			message: """

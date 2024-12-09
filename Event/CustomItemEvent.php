@@ -9,20 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomItemEvent extends Event
 {
-    /**
-     * @var CustomItem
-     */
-    private $customItem;
-
-    /**
-     * @var bool
-     */
-    private $isNew;
-
-    public function __construct(CustomItem $customItem, bool $isNew = false)
+    public function __construct(private CustomItem $customItem, private bool $isNew = false)
     {
-        $this->customItem = $customItem;
-        $this->isNew      = $isNew;
     }
 
     public function getCustomItem(): CustomItem

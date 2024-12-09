@@ -16,29 +16,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomItemButtonSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CustomItemPermissionProvider
-     */
-    private $permissionProvider;
-
-    /**
-     * @var CustomItemRouteProvider
-     */
-    private $routeProvider;
-
     public function __construct(
-        CustomItemPermissionProvider $permissionProvider,
-        CustomItemRouteProvider $routeProvider,
-        TranslatorInterface $translator
+        private CustomItemPermissionProvider $permissionProvider,
+        private CustomItemRouteProvider $routeProvider,
+        private TranslatorInterface $translator
     ) {
-        $this->permissionProvider = $permissionProvider;
-        $this->routeProvider      = $routeProvider;
-        $this->translator         = $translator;
     }
 
     /**
@@ -112,7 +94,7 @@ class CustomItemButtonSubscriber implements EventSubscriberInterface
                             $event->getRoute()
                         );
                     }
-                } catch (ForbiddenException $e) {
+                } catch (ForbiddenException) {
                 }
 
                 break;
@@ -136,17 +118,17 @@ class CustomItemButtonSubscriber implements EventSubscriberInterface
         if ($customItem && $customItem instanceof CustomItem) {
             try {
                 $event->addButton($this->defineDeleteButton($customObjectId, $customItem), $location, $event->getRoute());
-            } catch (ForbiddenException $e) {
+            } catch (ForbiddenException) {
             }
 
             try {
                 $event->addButton($this->defineCloneButton($customObjectId, $customItem), $location, $event->getRoute());
-            } catch (ForbiddenException $e) {
+            } catch (ForbiddenException) {
             }
 
             try {
                 $event->addButton($this->defineEditButton($customObjectId, $customItem), $location, $event->getRoute());
-            } catch (ForbiddenException $e) {
+            } catch (ForbiddenException) {
             }
         }
     }

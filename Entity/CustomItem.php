@@ -190,9 +190,9 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     private ?string $uniqueHash = null;
 
-    public function __construct(CustomObject $customObject)
+    public function __construct(CustomObject $initCustomObject)
     {
-        $this->customObject              = $customObject;
+        $this->customObject              = $initCustomObject;
         $this->customFieldValues         = new ArrayCollection();
         $this->contactReferences         = new ArrayCollection();
         $this->companyReferences         = new ArrayCollection();
@@ -262,10 +262,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
         }
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId()
+    public function getId(): int
     {
         return (int) $this->id;
     }
@@ -273,7 +270,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->isChanged('name', $name);
         $this->name = $name;
@@ -311,7 +308,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param Category|null $category
      */
-    public function setCategory($category)
+    public function setCategory($category): void
     {
         $this->isChanged('category', $category ? $category : null);
         $this->category = $category;
@@ -328,7 +325,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param string|null $language
      */
-    public function setLanguage($language)
+    public function setLanguage($language): void
     {
         $this->isChanged('language', $language);
         $this->language = $language;
@@ -363,7 +360,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param CustomFieldValueInterface $customFieldValue
      */
-    public function addCustomFieldValue($customFieldValue)
+    public function addCustomFieldValue($customFieldValue): void
     {
         if (null === $this->customFieldValues) {
             $this->customFieldValues = new ArrayCollection();
@@ -377,13 +374,13 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *
      * @throws NotFoundException
      */
-    public function setCustomFieldValues($values)
+    public function setCustomFieldValues($values): void
     {
         foreach ($values as $fieldName => $fieldValue) {
             try {
                 $customFieldValue = $this->findCustomFieldValueForFieldAlias((string) $fieldName);
                 $customFieldValue->setValue($fieldValue);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 $this->createNewCustomFieldValueByFieldAlias((string) $fieldName, $fieldValue);
             }
         }
@@ -393,7 +390,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * Called when the custom field values are loaded from the database.
      */
-    public function createFieldValuesSnapshot()
+    public function createFieldValuesSnapshot(): void
     {
         foreach ($this->customFieldValues as $customFieldValue) {
             $this->initialCustomFieldValues[$customFieldValue->getCustomField()->getId()] = $customFieldValue->getValue();
@@ -403,7 +400,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * Called before CustomItemSave. It will record changes that happened for custom field values.
      */
-    public function recordCustomFieldValueChanges()
+    public function recordCustomFieldValueChanges(): void
     {
         foreach ($this->customFieldValues as $customFieldValue) {
             $customFieldId = $customFieldValue->getCustomField()->getId();
@@ -462,7 +459,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
             try {
                 $customFieldValue = $this->findCustomFieldValueForFieldId((int) $value['id']);
                 $customFieldValue->setValue($value['value']);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 $this->createNewCustomFieldValueByFieldId((int) $value['id'], $value['value']);
             }
         }
@@ -505,9 +502,10 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      */
     public function findCustomFieldValueForFieldAlias($customFieldAlias)
     {
-        $filteredValues = $this->customFieldValues->filter(function (CustomFieldValueInterface $customFieldValue) use ($customFieldAlias) {
-            return $customFieldValue->getCustomField()->getAlias() === $customFieldAlias;
-        });
+        $filteredValues = $this->customFieldValues->filter(
+            function (CustomFieldValueInterface $customFieldValue) use ($customFieldAlias): bool {
+                return $customFieldValue->getCustomField()->getAlias() === $customFieldAlias;
+            });
 
         if (!$filteredValues->count()) {
             throw new NotFoundException("Custom Field Value for alias = {$customFieldAlias} was not found.");
@@ -520,7 +518,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     {
         /** @var CustomItemXrefCustomItem|null $childXref */
         $childXref = $this->getCustomItemLowerReferences()
-            ->filter(function (CustomItemXrefCustomItem $xref) {
+            ->filter(function (CustomItemXrefCustomItem $xref): bool {
                 // The child custom item's object must have the same ID as the current custom item child object.
                 return $xref->getCustomItemLinkedTo($this)->getCustomObject()->getMasterObject()->getId() === $this->getCustomObject()->getId();
             })->first();
@@ -576,10 +574,10 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     public function setDefaultValuesForMissingFields(): void
     {
-        $this->getCustomObject()->getCustomFields()->map(function (CustomField $customField) {
+        $this->getCustomObject()->getCustomFields()->map(function (CustomField $customField): void {
             try {
                 $this->findCustomFieldValueForFieldId($customField->getId());
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 $this->addCustomFieldValue(
                     $customField->getTypeObject()->createValueEntity($customField, $this, $customField->getDefaultValue())
                 );
@@ -590,7 +588,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param CustomItemXrefInterface $reference
      */
-    public function addContactReference($reference)
+    public function addContactReference($reference): void
     {
         $this->contactReferences->add($reference);
     }
@@ -606,7 +604,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param CustomItemXrefInterface $reference
      */
-    public function addCompanyReference($reference)
+    public function addCompanyReference($reference): void
     {
         $this->companyReferences->add($reference);
     }
@@ -622,7 +620,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @param CustomItemXrefInterface $reference
      */
-    public function addCustomItemReference($reference)
+    public function addCustomItemReference($reference): void
     {
         $this->customItemLowerReferences->add($reference);
     }
@@ -637,16 +635,12 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
 
     public function getRelationsByType(string $entityType): Collection
     {
-        switch ($entityType) {
-            case 'contact':
-                return $this->getContactReferences();
-            case 'company':
-                return $this->getCompanyReferences();
-            case 'customItem':
-                return $this->getCustomItemLowerReferences();
-            default:
-                return new ArrayCollection([]);
-        }
+        return match ($entityType) {
+            'contact'    => $this->getContactReferences(),
+            'company'    => $this->getCompanyReferences(),
+            'customItem' => $this->getCustomItemLowerReferences(),
+            default      => new ArrayCollection([]),
+        };
     }
 
     public function getUniqueHash(): ?string

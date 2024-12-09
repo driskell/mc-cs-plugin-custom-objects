@@ -19,54 +19,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ContactTabSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    /**
-     * @var CustomItemRepository
-     */
-    private $customItemRepository;
-
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var CustomItemRouteProvider
-     */
-    private $customItemRouteProvider;
-
-    /**
      * @var CustomObject[]
      */
-    private $customObjects = [];
-
-    /**
-     * @var SessionProviderFactory
-     */
-    private $sessionProviderFactory;
+    private array $customObjects = [];
 
     public function __construct(
-        CustomObjectModel $customObjectModel,
-        CustomItemRepository $customItemRepository,
-        ConfigProvider $configProvider,
-        TranslatorInterface $translator,
-        CustomItemRouteProvider $customItemRouteProvider,
-        SessionProviderFactory $sessionProviderFactory
+        private CustomObjectModel $customObjectModel,
+        private CustomItemRepository $customItemRepository,
+        private ConfigProvider $configProvider,
+        private TranslatorInterface $translator,
+        private CustomItemRouteProvider $customItemRouteProvider,
+        private SessionProviderFactory $sessionProviderFactory
     ) {
-        $this->customObjectModel       = $customObjectModel;
-        $this->customItemRepository    = $customItemRepository;
-        $this->configProvider          = $configProvider;
-        $this->translator              = $translator;
-        $this->customItemRouteProvider = $customItemRouteProvider;
-        $this->sessionProviderFactory  = $sessionProviderFactory;
     }
 
     /**

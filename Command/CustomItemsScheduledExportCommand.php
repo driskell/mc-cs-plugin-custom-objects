@@ -18,19 +18,11 @@ class CustomItemsScheduledExportCommand extends Command
 {
     public const COMMAND_NAME = 'mautic:custom_items:scheduled_export';
 
-    private CustomItemExportSchedulerModel $customItemExportSchedulerModel;
-    private EventDispatcherInterface $eventDispatcher;
-    private FormatterHelper $formatterHelper;
-
     public function __construct(
-        CustomItemExportSchedulerModel $customItemExportSchedulerModel,
-        EventDispatcherInterface $eventDispatcher,
-        FormatterHelper $formatterHelper
+        private CustomItemExportSchedulerModel $customItemExportSchedulerModel,
+        private EventDispatcherInterface $eventDispatcher,
+        private FormatterHelper $formatterHelper
     ) {
-        $this->customItemExportSchedulerModel = $customItemExportSchedulerModel;
-        $this->eventDispatcher                = $eventDispatcher;
-        $this->formatterHelper                = $formatterHelper;
-
         parent::__construct();
     }
 

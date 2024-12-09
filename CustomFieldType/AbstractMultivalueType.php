@@ -22,19 +22,12 @@ abstract class AbstractMultivalueType extends AbstractCustomFieldType
 {
     public const TABLE_NAME = 'custom_field_value_option';
 
-    /**
-     * @var CsvHelper
-     */
-    private $csvHelper;
-
     public function __construct(
         TranslatorInterface $translator,
         FilterOperatorProviderInterface $filterOperatorProvider,
-        CsvHelper $csvHelper
+        private CsvHelper $csvHelper
     ) {
         parent::__construct($translator, $filterOperatorProvider);
-
-        $this->csvHelper = $csvHelper;
     }
 
     /**
@@ -94,7 +87,7 @@ abstract class AbstractMultivalueType extends AbstractCustomFieldType
         }
 
         $options        = $customField->getOptions();
-        $possibleValues = $options->map(function (CustomFieldOption $option) {
+        $possibleValues = $options->map(function (CustomFieldOption $option): string {
             return $option->getValue();
         })->getValues();
 
@@ -129,7 +122,7 @@ abstract class AbstractMultivalueType extends AbstractCustomFieldType
         foreach ($values as $value) {
             try {
                 $labels[] = $fieldValue->getCustomField()->valueToLabel((string) $value);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 // When the value does not exist anymore, use the value instead.
                 $labels[] = $value;
             }

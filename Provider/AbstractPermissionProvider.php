@@ -14,7 +14,7 @@ abstract class AbstractPermissionProvider
 
     public function __construct(private CorePermissions $corePermissions)
     {
-     }
+    }
 
     /**
      * @throws ForbiddenException

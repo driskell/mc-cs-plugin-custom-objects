@@ -18,30 +18,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenerateSampleDataCommand extends Command
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var RandomHelper
-     */
-    private $randomHelper;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(
-        EntityManager $entityManager,
-        RandomHelper $randomHelper
+        private EntityManager $entityManager,
+        private RandomHelper $randomHelper
     ) {
         parent::__construct();
 
-        $this->entityManager     = $entityManager;
-        $this->randomHelper      = $randomHelper;
-        $this->connection        = $entityManager->getConnection();
+        $this->connection = $entityManager->getConnection();
     }
 
     /**

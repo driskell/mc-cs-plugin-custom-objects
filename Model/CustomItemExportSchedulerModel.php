@@ -159,10 +159,10 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
                     $fieldValue = $listData->getFields($customItem->getId())[$customField->getId()]->getValue();
 
                     $value = match ($customField->getType()) {
-                        'date' => $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d') : $fieldValue,
-                        'datetime' => $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d H:i:s') : $fieldValue,
+                        'date'        => $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d') : $fieldValue,
+                        'datetime'    => $fieldValue instanceof \DateTimeInterface ? $fieldValue->format('Y-m-d H:i:s') : $fieldValue,
                         'multiselect' => is_array($fieldValue) ? implode(',', $fieldValue) : $fieldValue,
-                         default => $fieldValue,
+                        default       => $fieldValue,
                     };
 
                     $rowData[] = $value;

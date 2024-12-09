@@ -10,20 +10,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomItemListQueryEvent extends Event
 {
-    /**
-     * @var QueryBuilder
-     */
-    private $queryBuilder;
-
-    /**
-     * @var TableConfig
-     */
-    private $tableConfig;
-
-    public function __construct(QueryBuilder $queryBuilder, TableConfig $tableConfig)
-    {
-        $this->queryBuilder = $queryBuilder;
-        $this->tableConfig  = $tableConfig;
+    public function __construct(
+        private QueryBuilder $queryBuilder,
+        private TableConfig $tableConfig
+    ) {
     }
 
     public function getQueryBuilder(): QueryBuilder

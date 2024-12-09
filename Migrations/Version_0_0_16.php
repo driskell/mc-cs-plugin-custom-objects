@@ -18,7 +18,7 @@ class Version_0_0_16 extends AbstractMigration
         try {
             return $table->hasColumn('required')
                 && null === $table->getColumn('required')->getDefault();
-        } catch (SchemaException $e) {
+        } catch (SchemaException) {
             return false;
         }
     }

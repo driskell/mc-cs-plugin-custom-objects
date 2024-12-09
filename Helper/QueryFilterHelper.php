@@ -18,26 +18,11 @@ class QueryFilterHelper
 {
     use DbalQueryTrait;
 
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var QueryFilterFactory
-     */
-    private $queryFilterFactory;
-
-    private RandomParameterName $randomParameterNameService;
-
     public function __construct(
-        EntityManager $entityManager,
-        QueryFilterFactory $queryFilterFactory,
-        RandomParameterName $randomParameterNameService
+        private EntityManager $entityManager,
+        private QueryFilterFactory $queryFilterFactory,
+        private RandomParameterName $randomParameterNameService
     ) {
-        $this->entityManager              = $entityManager;
-        $this->queryFilterFactory         = $queryFilterFactory;
-        $this->randomParameterNameService = $randomParameterNameService;
     }
 
     public function createValueQuery(
@@ -271,51 +256,32 @@ class QueryFilterHelper
         string $operator,
         string $valueParameter
     ) {
-        switch ($operator) {
-            case 'empty':
-                $expression = $customQuery->expr()->or(
-                    $customQuery->expr()->isNull($tableAlias.'_item.name'),
-                    $customQuery->expr()->eq($tableAlias.'_item.name', $customQuery->expr()->literal(''))
-                );
-
-                break;
-            case 'notEmpty':
-                $expression = $customQuery->expr()->and(
-                    $customQuery->expr()->isNotNull($tableAlias.'_item.name'),
-                    $customQuery->expr()->neq($tableAlias.'_item.name', $customQuery->expr()->literal(''))
-                );
-
-                break;
-            case 'notIn':
-            case 'in':
-                $expression     = $customQuery->expr()->in(
-                    $tableAlias.'_item.name',
-                    ":{$valueParameter}"
-                );
-
-                break;
-            case 'neq':
-                $expression     = $customQuery->expr()->orX(
-                    $customQuery->expr()->eq($tableAlias.'_item.name', ':'.$valueParameter),
-                    $customQuery->expr()->isNull($tableAlias.'_item.name')
-                );
-
-                break;
-            case 'notLike':
-                $expression = $customQuery->expr()->or(
-                    $customQuery->expr()->isNull($tableAlias.'_item.name'),
-                    $customQuery->expr()->like($tableAlias.'_item.name', ":{$valueParameter}")
-                );
-
-                break;
-            default:
-                $expression     = $customQuery->expr()->{$operator}(
-                    $tableAlias.'_item.name',
-                    ":{$valueParameter}"
-                );
-        }
-
-        return $expression;
+        return match ($operator) {
+            'empty' => $customQuery->expr()->or(
+                $customQuery->expr()->isNull($tableAlias.'_item.name'),
+                $customQuery->expr()->eq($tableAlias.'_item.name', $customQuery->expr()->literal(''))
+            ),
+            'notEmpty' => $customQuery->expr()->and(
+                $customQuery->expr()->isNotNull($tableAlias.'_item.name'),
+                $customQuery->expr()->neq($tableAlias.'_item.name', $customQuery->expr()->literal(''))
+            ),
+            'notIn', 'in' => $customQuery->expr()->in(
+                $tableAlias.'_item.name',
+                ":{$valueParameter}"
+            ),
+            'neq' => $customQuery->expr()->orX(
+                $customQuery->expr()->eq($tableAlias.'_item.name', ':'.$valueParameter),
+                $customQuery->expr()->isNull($tableAlias.'_item.name')
+            ),
+            'notLike' => $customQuery->expr()->or(
+                $customQuery->expr()->isNull($tableAlias.'_item.name'),
+                $customQuery->expr()->like($tableAlias.'_item.name', ":{$valueParameter}")
+            ),
+            default => $customQuery->expr()->{$operator}(
+                $tableAlias.'_item.name',
+                ":{$valueParameter}"
+            ),
+        };
     }
 
     /**

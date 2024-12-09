@@ -8,30 +8,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomObjectListFormatEvent extends Event
 {
-    /**
-     * @var array
-     */
-    private $customObjectValues;
+    private string $formattedString = '';
 
-    /**
-     * @var string
-     */
-    private $format;
+    private bool $hasBeenFormatted = false;
 
-    /**
-     * @var string
-     */
-    private $formattedString = '';
-
-    /**
-     * @var bool
-     */
-    private $hasBeenFormatted = false;
-
-    public function __construct(array $customObjectValues, string $format = 'default')
+    public function __construct(private array $customObjectValues, private string $format = 'default')
     {
-        $this->customObjectValues = $customObjectValues;
-        $this->format             = $format;
     }
 
     public function getCustomObjectValues(): array

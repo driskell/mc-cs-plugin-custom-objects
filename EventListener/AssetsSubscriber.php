@@ -13,22 +13,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AssetsSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var AssetsHelper
-     */
-    private $assetHelper;
-
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
     public function __construct(
-        AssetsHelper $assetHelper,
-        ConfigProvider $configProvider
+        private AssetsHelper $assetHelper,
+        private ConfigProvider $configProvider
     ) {
-        $this->assetHelper    = $assetHelper;
-        $this->configProvider = $configProvider;
     }
 
     /**

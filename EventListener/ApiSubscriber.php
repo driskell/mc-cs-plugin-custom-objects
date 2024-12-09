@@ -21,29 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    /**
-     * @var CustomItemModel
-     */
-    private $customItemModel;
-
     public function __construct(
-        ConfigProvider $configProvider,
-        CustomObjectModel $customObjectModel,
-        CustomItemModel $customItemModel
+        private ConfigProvider $configProvider,
+        private CustomObjectModel $customObjectModel,
+        private CustomItemModel $customItemModel
     ) {
-        $this->configProvider    = $configProvider;
-        $this->customObjectModel = $customObjectModel;
-        $this->customItemModel   = $customItemModel;
     }
 
     /**
@@ -78,7 +60,7 @@ class ApiSubscriber implements EventSubscriberInterface
                 $event->getEntityRequestParameters(),
                 $event->getRequest()
             );
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             return;
         }
 

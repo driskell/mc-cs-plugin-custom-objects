@@ -14,19 +14,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CustomFieldFilterQueryBuilder extends BaseFilterQueryBuilder
 {
-    /**
-     * @var QueryFilterHelper
-     */
-    private $filterHelper;
-
     public function __construct(
         RandomParameterName $randomParameterNameService,
         EventDispatcherInterface $dispatcher,
-        QueryFilterHelper $filterHelper
+        private QueryFilterHelper $filterHelper
     ) {
         parent::__construct($randomParameterNameService, $dispatcher);
-
-        $this->filterHelper  = $filterHelper;
     }
 
     /** {@inheritdoc} */
@@ -53,25 +46,16 @@ class CustomFieldFilterQueryBuilder extends BaseFilterQueryBuilder
             );
         }
 
-        switch ($filterOperator) {
-            case 'empty':
-            case 'neq':
-            case 'notLike':
-            case '!multiselect':
-            case '!between':
-            case 'notBetween':
-                $queryBuilder->addLogic(
-                    $queryBuilder->expr()->notExists($unionQueryContainer->getSQL()),
-                    $filter->getGlue()
-                );
-
-                break;
-            default:
-                $queryBuilder->addLogic(
-                    $queryBuilder->expr()->exists($unionQueryContainer->getSQL()),
-                    $filter->getGlue()
-                );
-        }
+        match ($filterOperator) {
+            'empty', 'neq', 'notLike', '!multiselect', '!between', 'notBetween' => $queryBuilder->addLogic(
+                $queryBuilder->expr()->notExists($unionQueryContainer->getSQL()),
+                $filter->getGlue()
+            ),
+            default => $queryBuilder->addLogic(
+                $queryBuilder->expr()->exists($unionQueryContainer->getSQL()),
+                $filter->getGlue()
+            ),
+        };
 
         $queryBuilder->setParameters($unionQueryContainer->getParameters(), $unionQueryContainer->getParameterTypes());
 

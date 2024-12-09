@@ -17,33 +17,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CampaignConditionFieldValueType extends AbstractType
 {
-    /**
-     * @var CustomFieldModel
-     */
-    protected $customFieldModel;
-
-    /**
-     * @var CustomItemRouteProvider
-     */
-    protected $routeProvider;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    private CustomObjectModel $customObjectModel;
-
     public function __construct(
-        CustomFieldModel $customFieldModel,
-        CustomObjectModel $customObjectModel,
-        CustomItemRouteProvider $routeProvider,
-        TranslatorInterface $translator
+        protected CustomFieldModel $customFieldModel,
+        private CustomObjectModel $customObjectModel,
+        protected CustomItemRouteProvider $routeProvider,
+        protected TranslatorInterface $translator
     ) {
-        $this->customFieldModel  = $customFieldModel;
-        $this->customObjectModel = $customObjectModel;
-        $this->routeProvider     = $routeProvider;
-        $this->translator        = $translator;
     }
 
     /**

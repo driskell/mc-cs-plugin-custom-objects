@@ -34,7 +34,7 @@ class LinkController extends JsonController
                 'custom.item.linked',
                 ['%itemId%' => $customItem->getId(), '%itemName%' => $customItem->getName(), '%entityType%' => $entityType, '%entityId%' => $entityId]
             );
-        } catch (UniqueConstraintViolationException $e) {
+        } catch (UniqueConstraintViolationException) {
             $flashBag->add(
                 'custom.item.error.link.exists.already',
                 ['%itemId%' => $itemId, '%entityType%' => $entityType, '%entityId%' => $entityId],

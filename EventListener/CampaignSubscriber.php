@@ -37,64 +37,16 @@ class CampaignSubscriber implements EventSubscriberInterface
     use DbalQueryTrait;
     use QueryBuilderManipulatorTrait;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @var CustomFieldModel
-     */
-    private $customFieldModel;
-
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    /**
-     * @var CustomItemModel
-     */
-    private $customItemModel;
-
-    /**
-     * @var ConfigProvider
-     */
-    private $configProvider;
-
-    /**
-     * @var QueryFilterHelper
-     */
-    private $queryFilterHelper;
-
-    /**
-     * @var QueryFilterFactory
-     */
-    private $queryFilterFactory;
-
-    /**
-     * @var Connection
-     */
-    private $connection;
-
     public function __construct(
-        CustomFieldModel $customFieldModel,
-        CustomObjectModel $customObjectModel,
-        CustomItemModel $customItemModel,
-        TranslatorInterface $translator,
-        ConfigProvider $configProvider,
-        QueryFilterHelper $queryFilterHelper,
-        QueryFilterFactory $queryFilterFactory,
-        Connection $connection
+        private CustomFieldModel $customFieldModel,
+        private CustomObjectModel $customObjectModel,
+        private CustomItemModel $customItemModel,
+        private TranslatorInterface $translator,
+        private ConfigProvider $configProvider,
+        private QueryFilterHelper $queryFilterHelper,
+        private QueryFilterFactory $queryFilterFactory,
+        private Connection $connection
     ) {
-        $this->customFieldModel   = $customFieldModel;
-        $this->customObjectModel  = $customObjectModel;
-        $this->customItemModel    = $customItemModel;
-        $this->translator         = $translator;
-        $this->configProvider     = $configProvider;
-        $this->queryFilterHelper  = $queryFilterHelper;
-        $this->queryFilterFactory = $queryFilterFactory;
-        $this->connection         = $connection;
     }
 
     /**
@@ -164,7 +116,7 @@ class CampaignSubscriber implements EventSubscriberInterface
             try {
                 $customItem = $this->customItemModel->fetchEntity($linkCustomItemId);
                 $this->customItemModel->linkEntity($customItem, 'contact', $contactId);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 // Do nothing if the custom item doesn't exist anymore.
             }
         }
@@ -173,7 +125,7 @@ class CampaignSubscriber implements EventSubscriberInterface
             try {
                 $customItem = $this->customItemModel->fetchEntity($unlinkCustomItemId);
                 $this->customItemModel->unlinkEntity($customItem, 'contact', $contactId);
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 // Do nothing if the custom item doesn't exist anymore.
             }
         }
@@ -203,7 +155,7 @@ class CampaignSubscriber implements EventSubscriberInterface
 
         try {
             $customField = $this->customFieldModel->fetchEntity((int) $event->getConfig()['field']);
-        } catch (NotFoundException $e) {
+        } catch (NotFoundException) {
             $event->setResult(false);
 
             return;

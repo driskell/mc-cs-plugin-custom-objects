@@ -14,20 +14,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CampaignActionLinkType extends AbstractType
 {
-    /**
-     * @var CustomItemRouteProvider
-     */
-    protected $routeProvider;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    public function __construct(CustomItemRouteProvider $routeProvider, TranslatorInterface $translator)
-    {
-        $this->routeProvider = $routeProvider;
-        $this->translator    = $translator;
+    public function __construct(
+        protected CustomItemRouteProvider $routeProvider,
+        protected TranslatorInterface $translator
+    ) {
     }
 
     /**

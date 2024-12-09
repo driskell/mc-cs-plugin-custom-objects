@@ -296,8 +296,8 @@ class CustomItemModel extends FormModel
     {
         $customFields = match ($filterEntityType) {
             'customItem' => $customObject->getFieldsShowInCustomObjectDetailList(),
-            'contact' => $customObject->getFieldsShowInContactDetailList(),
-             default => $customObject->getPublishedFields(),
+            'contact'    => $customObject->getFieldsShowInContactDetailList(),
+            default      => $customObject->getPublishedFields(),
         };
 
         return $this->customFieldValueModel->getItemsListData($customFields, $customItems);

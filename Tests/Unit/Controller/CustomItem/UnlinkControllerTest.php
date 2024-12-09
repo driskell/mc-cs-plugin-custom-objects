@@ -133,7 +133,7 @@ class UnlinkControllerTest extends ControllerTestCase
     public function testSaveAction(): void
     {
         $customItem = new class(new CustomObject()) extends CustomItem {
-            public function getId()
+            public function getId(): int
             {
                 return UnlinkControllerTest::ITEM_ID;
             }
@@ -174,7 +174,7 @@ class UnlinkControllerTest extends ControllerTestCase
         $customObject->setRelationshipObject($childCustomObject);
 
         $customItem = new class($customObject) extends CustomItem {
-            public function getId()
+            public function getId(): int
             {
                 return UnlinkControllerTest::ITEM_ID;
             }

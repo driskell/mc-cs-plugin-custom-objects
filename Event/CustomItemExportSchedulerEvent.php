@@ -9,13 +9,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomItemExportSchedulerEvent extends Event
 {
-    private CustomItemExportScheduler $customItemExportScheduler;
-
     private string $filePath;
 
-    public function __construct(CustomItemExportScheduler $customItemExportScheduler)
+    public function __construct(private CustomItemExportScheduler $customItemExportScheduler)
     {
-        $this->customItemExportScheduler = $customItemExportScheduler;
     }
 
     public function getCustomItemExportScheduler(): CustomItemExportScheduler

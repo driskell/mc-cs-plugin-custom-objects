@@ -21,20 +21,11 @@ class CustomItemXrefCustomItem implements CustomItemXrefInterface
 {
     public const TABLE_ALIAS = 'CustomItemXrefCustomItem';
 
-    /**
-     * @var CustomItem
-     */
-    private $customItemLower;
+    private CustomItem $customItemLower;
 
-    /**
-     * @var CustomItem
-     */
-    private $customItemHigher;
+    private CustomItem $customItemHigher;
 
-    /**
-     * @var \DateTimeInterface
-     */
-    private $dateAdded;
+    private \DateTimeInterface $dateAdded;
 
     /**
      * @throws \UnexpectedValueException

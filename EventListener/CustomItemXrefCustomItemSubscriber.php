@@ -20,20 +20,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CustomItemXrefCustomItemSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
-    /**
-     * @var CustomItemRepository
-     */
-    private $customItemRepository;
-
-    public function __construct(EntityManager $entityManager, CustomItemRepository $customItemRepository)
-    {
-        $this->entityManager        = $entityManager;
-        $this->customItemRepository = $customItemRepository;
+    public function __construct(
+        private EntityManager $entityManager,
+        private CustomItemRepository $customItemRepository
+    ) {
     }
 
     /**
@@ -88,7 +78,7 @@ class CustomItemXrefCustomItemSubscriber implements EventSubscriberInterface
         if ('customItem' === $event->getEntityType()) {
             try {
                 $xRef = $this->getXrefEntity($event->getCustomItem()->getId(), $event->getEntityId());
-            } catch (NoResultException $e) {
+            } catch (NoResultException) {
                 /** @var CustomItem $customItemB */
                 $customItemB = $this->entityManager->getReference(CustomItem::class, $event->getEntityId());
                 $xRef        = new CustomItemXrefCustomItem($event->getCustomItem(), $customItemB);

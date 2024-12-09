@@ -21,14 +21,8 @@ class FilterOperatorSubscriber implements EventSubscriberInterface
 
     public const NOT_IN_CUSTOM_OBJECTS = 'notInCustomObjects';
 
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    public function __construct(CustomObjectModel $customObjectModel)
+    public function __construct(private CustomObjectModel $customObjectModel)
     {
-        $this->customObjectModel = $customObjectModel;
     }
 
     /**
@@ -45,7 +39,7 @@ class FilterOperatorSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onOperatorsGenerate(LeadListFiltersOperatorsEvent $event)
+    public function onOperatorsGenerate(LeadListFiltersOperatorsEvent $event): void
     {
         $event->addOperator(self::WITHIN_CUSTOM_OBJECTS, [
             'label'       => 'custom.within.custom.objects.label',

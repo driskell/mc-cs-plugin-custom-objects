@@ -241,7 +241,7 @@ class FormControllerTest extends ControllerTestCase
         };
 
         $customItem = new class($customObject) extends CustomItem {
-            public function getId()
+            public function getId(): int
             {
                 return FormControllerTest::ITEM_ID;
             }
@@ -459,7 +459,7 @@ class FormControllerTest extends ControllerTestCase
         };
 
         $customItem = new class($customObject) extends CustomItem {
-            public function getId()
+            public function getId(): int
             {
                 return FormControllerTest::ITEM_ID;
             }
@@ -522,7 +522,7 @@ class FormControllerTest extends ControllerTestCase
         };
 
         $customItem = new class($customObject) extends CustomItem {
-            public function getId()
+            public function getId(): int
             {
                 return FormControllerTest::ITEM_ID;
             }
@@ -530,7 +530,7 @@ class FormControllerTest extends ControllerTestCase
             public function findChildCustomItem(): CustomItem
             {
                 return new class($this->getCustomObject()->getRelationshipObject()) extends CustomItem {
-                    public function getId()
+                    public function getId(): int
                     {
                         return 777;
                     }

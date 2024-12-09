@@ -14,6 +14,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class OptionsToStringTransformer implements DataTransformerInterface
 {
+    /**
+     * @var mixed[]
+     */
     private array $customFieldCache = [];
 
     public function __construct(private SerializerInterface $serializer, private CustomFieldModel $customFieldModel)

@@ -15,25 +15,13 @@ class CustomItemXrefContact implements CustomItemXrefInterface
     public const TABLE_NAME  = 'custom_item_xref_contact';
     public const TABLE_ALIAS = 'CustomItemXrefContact';
 
-    /**
-     * @var Lead
-     */
-    private $contact;
+    private \DateTimeInterface $dateAdded;
 
-    /**
-     * @var CustomItem
-     */
-    private $customItem;
-
-    /**
-     * @var \DateTimeInterface
-     */
-    private $dateAdded;
-
-    public function __construct(CustomItem $customItem, Lead $contact, ?\DateTimeInterface $dateAdded = null)
-    {
-        $this->customItem = $customItem;
-        $this->contact    = $contact;
+    public function __construct(
+        private CustomItem $customItem,
+        private Lead $contact,
+        ?\DateTimeInterface $dateAdded = null
+    ) {
         $this->dateAdded  = $dateAdded ?: new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 

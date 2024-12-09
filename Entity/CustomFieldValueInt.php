@@ -10,16 +10,9 @@ use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 
 class CustomFieldValueInt extends AbstractCustomFieldValue
 {
-    /**
-     * @var int|null
-     */
-    private $value;
-
-    public function __construct(CustomField $customField, CustomItem $customItem, ?int $value = null)
+    public function __construct(CustomField $customField, CustomItem $customItem, private ?int $value = null)
     {
         parent::__construct($customField, $customItem);
-
-        $this->value = $value;
     }
 
     public static function loadMetadata(ORM\ClassMetadata $metadata): void

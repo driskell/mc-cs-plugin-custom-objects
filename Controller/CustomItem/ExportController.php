@@ -51,7 +51,7 @@ class ExportController extends AbstractFormController
     {
         try {
             return $model->getExportFileToDownload($fileName);
-        } catch (FileNotFoundException $exception) {
+        } catch (FileNotFoundException) {
             return $this->notFound();
         }
     }

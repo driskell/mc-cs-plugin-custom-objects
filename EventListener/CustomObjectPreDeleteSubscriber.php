@@ -12,20 +12,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CustomObjectPreDeleteSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var CustomObjectModel
-     */
-    private $customObjectModel;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    public function __construct(CustomObjectModel $customObjectModel, TranslatorInterface $translator)
-    {
-        $this->customObjectModel = $customObjectModel;
-        $this->translator        = $translator;
+    public function __construct(
+        private CustomObjectModel $customObjectModel,
+        private TranslatorInterface $translator
+    ) {
     }
 
     public static function getSubscribedEvents()

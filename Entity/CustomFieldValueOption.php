@@ -14,11 +14,6 @@ use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 class CustomFieldValueOption extends AbstractCustomFieldValue
 {
     /**
-     * @var int|null
-     */
-    private $id;
-
-    /**
      * @var string[]|string|null
      */
     private $value;
@@ -59,7 +54,7 @@ class CustomFieldValueOption extends AbstractCustomFieldValue
     /**
      * @param mixed $value
      */
-    public function addValue($value = null)
+    public function addValue($value = null): void
     {
         if (!$this->value) {
             $this->value = [];
@@ -75,7 +70,7 @@ class CustomFieldValueOption extends AbstractCustomFieldValue
     /**
      * @param mixed $value
      */
-    public function setValue($value = null)
+    public function setValue($value = null): void
     {
         if (is_array($value)) {
             $value = array_unique($value);

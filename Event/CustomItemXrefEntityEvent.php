@@ -9,14 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomItemXrefEntityEvent extends Event
 {
-    /**
-     * @var CustomItemXrefInterface
-     */
-    private $xRef;
-
-    public function __construct(CustomItemXrefInterface $xRef)
+    public function __construct(private CustomItemXrefInterface $xRef)
     {
-        $this->xRef = $xRef;
     }
 
     public function getXref(): CustomItemXrefInterface

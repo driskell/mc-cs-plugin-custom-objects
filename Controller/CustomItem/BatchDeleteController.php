@@ -38,9 +38,9 @@ class BatchDeleteController extends CommonController
                 $permissionProvider->canDelete($customItem);
                 $customItemModel->delete($customItem);
                 $deleted[] = $itemId;
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 $notFound[] = $itemId;
-            } catch (ForbiddenException $e) {
+            } catch (ForbiddenException) {
                 $denied[] = $itemId;
             }
         }

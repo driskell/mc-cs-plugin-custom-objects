@@ -30,7 +30,7 @@ class UnlinkController extends JsonController
             if ($customItem->getCustomObject()->getRelationshipObject()) {
                 try {
                     $childCustomItem = $customItem->findChildCustomItem();
-                } catch (NotFoundException $e) {
+                } catch (NotFoundException) {
                 }
 
                 if (isset($childCustomItem)) {
