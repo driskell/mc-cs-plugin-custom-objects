@@ -35,14 +35,8 @@ class CustomItemXrefCustomItemSubscriber implements EventSubscriberInterface
             CustomItemEvents::ON_CUSTOM_ITEM_LOOKUP_QUERY          => 'onLookupQuery',
             CustomItemEvents::ON_CUSTOM_ITEM_LIST_ORM_QUERY        => 'onListQuery',
             CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY_DISCOVERY => 'onEntityLinkDiscovery',
-            CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY           => [
-                ['saveLink', 1000],
-                ['createNewEvenLogForLinkedCustomItem', 0],
-            ],
-            CustomItemEvents::ON_CUSTOM_ITEM_UNLINK_ENTITY         => [
-                ['deleteLink', 1000],
-                ['createNewEvenLogForUnlinkedCustomItem', 0],
-            ],
+            CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY           => 'saveLink',
+            CustomItemEvents::ON_CUSTOM_ITEM_UNLINK_ENTITY         => 'deleteLink',
         ];
     }
 
@@ -100,13 +94,7 @@ class CustomItemXrefCustomItemSubscriber implements EventSubscriberInterface
         if ($event->getXref() instanceof CustomItemXrefCustomItem && !$this->entityManager->contains($event->getXref())) {
             $this->entityManager->persist($event->getXref());
             $this->entityManager->flush($event->getXref());
-        }
-    }
-
-    public function createNewEvenLogForLinkedCustomItem(CustomItemXrefEntityEvent $event): void
-    {
-        if ($event->getXref() instanceof CustomItemXrefCustomItem) {
-            // @todo
+            $this->entityManager->detach($event->getXref());
         }
     }
 
@@ -119,13 +107,6 @@ class CustomItemXrefCustomItemSubscriber implements EventSubscriberInterface
         if ($event->getXref() instanceof CustomItemXrefCustomItem && $this->entityManager->contains($event->getXref())) {
             $this->entityManager->remove($event->getXref());
             $this->entityManager->flush($event->getXref());
-        }
-    }
-
-    public function createNewEvenLogForUnlinkedCustomItem(CustomItemXrefEntityEvent $event): void
-    {
-        if ($event->getXref() instanceof CustomItemXrefCustomItem) {
-            // @todo
         }
     }
 

@@ -42,14 +42,8 @@ class CustomItemXrefContactSubscriber implements EventSubscriberInterface
             CustomItemEvents::ON_CUSTOM_ITEM_LIST_ORM_QUERY        => 'onListOrmQuery',
             CustomItemEvents::ON_CUSTOM_ITEM_LIST_DBAL_QUERY       => 'onListDbalQuery',
             CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY_DISCOVERY => 'onEntityLinkDiscovery',
-            CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY           => [
-                ['saveLink', 1000],
-                ['createNewEventLogForLinkedContact', 0],
-            ],
-            CustomItemEvents::ON_CUSTOM_ITEM_UNLINK_ENTITY         => [
-                ['deleteLink', 1000],
-                ['createNewEventLogForUnlinkedContact', 0],
-            ],
+            CustomItemEvents::ON_CUSTOM_ITEM_LINK_ENTITY           => 'saveLink',
+            CustomItemEvents::ON_CUSTOM_ITEM_UNLINK_ENTITY         => 'deleteLink',
         ];
     }
 
@@ -122,15 +116,11 @@ class CustomItemXrefContactSubscriber implements EventSubscriberInterface
         if ($event->getXref() instanceof CustomItemXrefContact && !$this->entityManager->contains($event->getXref())) {
             $this->entityManager->persist($event->getXref());
             $this->entityManager->flush($event->getXref());
-        }
-    }
+            $this->entityManager->detach($event->getXref());
 
-    public function createNewEventLogForLinkedContact(CustomItemXrefEntityEvent $event): void
-    {
-        if ($event->getXref() instanceof CustomItemXrefContact
-            && CustomObject::TYPE_MASTER === $event->getXref()->getCustomItem()->getCustomObject()->getType()
-        ) {
-            $this->saveEventLog($event->getXref(), 'link');
+            if (CustomObject::TYPE_MASTER === $event->getXref()->getCustomItem()->getCustomObject()->getType()) {
+                $this->saveEventLog($event->getXref(), 'link');
+            }
         }
     }
 
@@ -143,19 +133,10 @@ class CustomItemXrefContactSubscriber implements EventSubscriberInterface
         if ($event->getXref() instanceof CustomItemXrefContact && $this->entityManager->contains($event->getXref())) {
             $this->entityManager->remove($event->getXref());
             $this->entityManager->flush($event->getXref());
-        }
-    }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function createNewEventLogForUnlinkedContact(CustomItemXrefEntityEvent $event): void
-    {
-        if ($event->getXref() instanceof CustomItemXrefContact
-            && CustomObject::TYPE_MASTER === $event->getXref()->getCustomItem()->getCustomObject()->getType()
-        ) {
-            $this->saveEventLog($event->getXref(), 'unlink');
+            if (CustomObject::TYPE_MASTER === $event->getXref()->getCustomItem()->getCustomObject()->getType()) {
+                $this->saveEventLog($event->getXref(), 'unlink');
+            }
         }
     }
 

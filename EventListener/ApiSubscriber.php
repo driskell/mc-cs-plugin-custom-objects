@@ -82,7 +82,8 @@ class ApiSubscriber implements EventSubscriberInterface
                 $customItem = $this->customItemModel->save($customItem, $dryRun);
 
                 if (!$dryRun) {
-                    $this->customItemModel->linkEntity($customItem, 'contact', (int) $contact->getId());
+                    $link = $this->customItemModel->linkEntity($customItem, 'contact', (int) $contact->getId());
+                    $this->entityManager->detach($link);
                 }
             }
         }
