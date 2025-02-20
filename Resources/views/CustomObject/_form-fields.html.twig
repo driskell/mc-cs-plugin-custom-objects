@@ -5,7 +5,7 @@
 
     {% if customFieldEntity.getId() not in deletedFields %}
         {{- include(
-            '@CustomObjects/CustomObject/Form\\Panel\\'~customFieldEntity.getType()~'.html.twig',
+            customFieldEntity.getTypeObject().getTemplate(),
             {
                 'customField': customField,
                 'customObject': customObject,

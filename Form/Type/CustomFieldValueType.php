@@ -29,6 +29,9 @@ class CustomFieldValueType extends AbstractType
         $symfonyFormType  = $customField->getTypeObject()->getSymfonyFormFieldType();
         $options          = $customItem->getId() ? [] : ['data' => $customField->getDefaultValue()];
         $options          = $customField->getFormFieldOptions($options);
+        if (isset($options['custom_field_id'])) {
+            $options['custom_field_id'] = $customFieldId;
+        }
         $formField        = $builder->create('value', $symfonyFormType, $options);
 
         try {

@@ -31,9 +31,7 @@
                             <tr>
                                 <th>{{ '%s'|format(fieldValue.getCustomField().getName()|escape)|raw }}</th>
                                 <td>
-                                    {{ include('@CustomObjects/CustomField/value.html.twig', {
-                                        fieldValue: fieldValue
-                                    }) }}
+                                    {{ fieldValue.customField.getTypeObject().valueToString(fieldValue) }}
                                 </td>
                             </tr>
                         {% endfor %}

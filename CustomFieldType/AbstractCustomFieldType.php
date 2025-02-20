@@ -168,4 +168,14 @@ abstract class AbstractCustomFieldType implements CustomFieldTypeInterface, \Str
     {
         return (string) $fieldValue->getValue();
     }
+
+    public function getTemplate(): string
+    {
+        return '@CustomObjects/CustomObject/Form/Panel/' . $this->getKey() . '.html.twig';
+    }
+
+    public function getFieldProperties(): array
+    {
+        return [];
+    }
 }

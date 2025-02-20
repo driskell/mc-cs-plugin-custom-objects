@@ -117,6 +117,8 @@ class SegmentFiltersChoicesGenerateSubscriber implements EventSubscriberInterfac
             $properties['list'] = $customField->getChoices();
         }
 
+        $properties = array_merge($properties, $customField->getTypeObject()->getFieldProperties());
+
         return $properties;
     }
 }

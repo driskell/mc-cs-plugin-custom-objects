@@ -98,4 +98,8 @@ interface CustomFieldTypeInterface
      * @param mixed $fieldValue
      */
     public function valueToString(CustomFieldValueInterface $fieldValue): string;
+
+    public function getTemplate(): string;
+
+    public function getFieldProperties(): array;
 }

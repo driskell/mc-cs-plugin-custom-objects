@@ -67,7 +67,7 @@
                     {% if fieldData is not empty %}
                         {% for fieldValue in fieldData.getFields(item.getId()) %}
                             <td>
-                                {{- include('@CustomObjects/CustomField/value.html.twig', { 'fieldValue' : fieldValue }) -}}
+                                {{ fieldValue.customField.getTypeObject().valueToString(fieldValue) }}
                             </td>
                         {% endfor %}
                     {% endif %}
