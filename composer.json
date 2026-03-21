@@ -29,9 +29,9 @@
         "wiki": "https://github.com/acquia/mc-cs-plugin-custom-objects/wiki"
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.2",
         "ext-mbstring": "*",
-        "mautic/core-lib": "^6.0",
+        "mautic/core-lib": "^7.0",
         "theofidry/alice-data-fixtures": "^1.1"
     },
     "scripts": {
