@@ -15,7 +15,7 @@ class CustomObjectTypeValues extends Constraint
         return CustomObjectTypeValuesValidator::class;
     }
 
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return self::CLASS_CONSTRAINT;
     }
