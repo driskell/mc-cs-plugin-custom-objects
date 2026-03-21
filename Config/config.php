@@ -287,7 +287,7 @@ $coParams = [
                     'mautic.helper.user',
                     'monolog.logger',
                     'mautic.helper.core_parameters',
-                    'mautic.helper.export',
+                    \Mautic\CoreBundle\Helper\ExportHelper::class,
                     'mautic.helper.mailer',
                     'mautic.custom.model.field.value',
                     'custom_item.route.provider',
