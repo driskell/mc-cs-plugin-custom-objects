@@ -23,4 +23,6 @@ return function (ContainerConfigurator $configurator): void {
         ->exclude('../{'.implode(',', array_merge(MauticCoreExtension::DEFAULT_EXCLUDES, $excludes)).'}');
 
     $services->load('MauticPlugin\\CustomObjectsBundle\\Repository\\', '../Repository/*Repository.php');
+
+    $services->alias('mautic.helper.export', \Mautic\CoreBundle\Helper\ExportHelper::class);
 };
