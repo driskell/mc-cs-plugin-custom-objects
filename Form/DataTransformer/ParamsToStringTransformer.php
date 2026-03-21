@@ -18,8 +18,10 @@ class ParamsToStringTransformer implements DataTransformerInterface
      * Transforms an object (Params) to a string (json).
      *
      * @param Params|null $params
+     *
+     * @return string
      */
-    public function transform($params = null): string
+    public function transform(mixed $params = null): mixed
     {
         if (null === $params) {
             // Param can be null because entities are not using constructors
@@ -36,9 +38,11 @@ class ParamsToStringTransformer implements DataTransformerInterface
     /**
      * Transforms a string (json) to an object (Params).
      *
-     * @param string $params
+     * @param mixed $params
+     *
+     * @return Params
      */
-    public function reverseTransform($params): Params
+    public function reverseTransform(mixed $params): mixed
     {
         $params = json_decode($params, true);
 

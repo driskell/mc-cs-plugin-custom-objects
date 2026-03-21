@@ -27,8 +27,10 @@ class OptionsToStringTransformer implements DataTransformerInterface
      * Transforms a collection of objects (CustomFieldOption[]) to a string (json).
      *
      * @param ArrayCollection|CustomFieldOption[]|null $options
+     *
+     * @return string
      */
-    public function transform($options = null): string
+    public function transform(mixed $options = null): mixed
     {
         if (!$options) {
             // Options can be null because entities are not using constructors
@@ -46,11 +48,11 @@ class OptionsToStringTransformer implements DataTransformerInterface
     /**
      * Transforms a string (json) to an objects (CustomFieldOption[]).
      *
-     * @param string $options
+     * @param mixed $options
      *
      * @return ArrayCollection|CustomFieldOption[]
      */
-    public function reverseTransform($options): ArrayCollection
+    public function reverseTransform(mixed $options): mixed
     {
         $options = json_decode($options, true);
 

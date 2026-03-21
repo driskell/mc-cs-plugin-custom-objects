@@ -14,9 +14,9 @@ class OptionsTransformer implements DataTransformerInterface
     /**
      * @param PersistentCollection|CustomFieldOption[] $value
      *
-     * @return string[]
+     * @return array<string, mixed>
      */
-    public function transform($value): array
+    public function transform(mixed $value): mixed
     {
         if (!$value || !$value->count()) {
             return ['list' => []];
@@ -34,9 +34,11 @@ class OptionsTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param string[] $value
+     * @param mixed $value
+     *
+     * @return ArrayCollection|CustomFieldOption[]
      */
-    public function reverseTransform($value): ArrayCollection
+    public function reverseTransform(mixed $value): mixed
     {
         $values  = [];
         $options = [];
