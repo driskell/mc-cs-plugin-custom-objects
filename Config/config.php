@@ -276,25 +276,7 @@ $coParams = [
                     'mautic.custom.model.field',
                 ],
             ],
-            'mautic.custom.model.export_scheduler' => [
-                'class'     => MauticPlugin\CustomObjectsBundle\Model\CustomItemExportSchedulerModel::class,
-                'arguments' => [
-                    'doctrine.orm.entity_manager',
-                    'mautic.security',
-                    'event_dispatcher',
-                    'router',
-                    'translator',
-                    'mautic.helper.user',
-                    'monolog.logger',
-                    'mautic.helper.core_parameters',
-                    \Mautic\CoreBundle\Helper\ExportHelper::class,
-                    'mautic.helper.mailer',
-                    'mautic.custom.model.field.value',
-                    'custom_item.route.provider',
-                    'custom_item.xref.contact.repository',
-                    'custom_item.repository',
-                ],
-            ],
+
         ],
         'permissions' => [
             'custom_object.permissions' => [
