@@ -329,16 +329,21 @@ class QueryFilterHelper
         $joinedAlias = [];
 
         foreach ($segmentFilter->contactSegmentFilterCrate->getMergedProperty() as $filter) {
+            // Core only factors the nested filters it considers, skipping those without a value
+            if (!($filter['filter'] ?? null) instanceof ContactSegmentFilter) {
+                continue;
+            }
+
             $segmentFilterFieldId       = (int) $filter['field'];
             $segmentFilterFieldType     = $filter['type'] ?: $this->queryFilterFactory
                 ->getCustomFieldTypeById($segmentFilterFieldId);
             $dataTable                  = $this->queryFilterFactory->getTableNameFromType($segmentFilterFieldType);
-            $segmentMergedFilter        = $segmentFilter;
+            $segmentMergedFilter        = $filter['filter'];
             $segmentFilterFieldOperator = (string) $filter['operator'];
 
             $alias                      = $customItemXrefContactAlias.'_'.$segmentFilterFieldId.'_'.$filter['type'];
             $aliasValue                 = $alias.'_value';
-            $isCmoFilter                = $filter['cmo_filter'] ?? false;
+            $isCmoFilter                = str_starts_with((string) $segmentMergedFilter->contactSegmentFilterCrate->getField(), 'cmo_');
             $cinAlias                   = 'cin_'.$segmentFilterFieldId;
             $cinAliasItem               = $cinAlias.'_item';
             $valueParameter             = $this->randomParameterNameService->generateRandomParameterName();
