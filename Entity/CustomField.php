@@ -708,10 +708,8 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
      * @Groups({"custom_field:write", "custom_object:write"})
      *
      * @param bool $isPublished
-     *
-     * @return $this
      */
-    public function setIsPublished($isPublished)
+    public function setIsPublished($isPublished): static
     {
         parent::setIsPublished($isPublished);
 
